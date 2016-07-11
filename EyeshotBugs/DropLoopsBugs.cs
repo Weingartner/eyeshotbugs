@@ -630,24 +630,35 @@ namespace EyeshotBugs
                     async () =>
                     {
 
-                        var path = new Circle(devDept.Geometry.Plane.XY, new Point3D(0, 0, 1), 1);
-                        var trim = new Circle(devDept.Geometry.Plane.YZ, new Point3D(1, 0, 1.5), 0.4);
+                        var path = new Circle(Plane.XY, new Point3D(0, 0, 1), 1);
 
-                        var s = path.ExtrudeAsSurface(Vector3D.AxisZ);
+                        // If you change dx to 1.01 then it works
+                        var dx = 1.00;
+                        var trim = new Circle(Plane.YZ, new Point3D(dx, 0, 1.5), 0.4);
 
-                        s = s.SelectMany(q => Surface.DropLoops(q, new[] { trim })).ToArray();
+                        var extrusion = path.ExtrudeAsSurface(Vector3D.AxisZ);
+
+                        var trimmedExtrusion = extrusion.SelectMany(q => Surface.DropLoops(q, new[] { trim })).ToArray();
 
                         trim.AddTo(Eyeshot.ViewportLayout);
 
-                        foreach (var surface in s)
+                        foreach (var surface in extrusion)
                         {
                             surface.ShowControl = true;
                         }
 
-                        foreach (var surface in s)
+                        foreach (var surface in extrusion)
                         {
 
                             surface.Color = Color.Green;
+                            surface.ColorMethod = colorMethodType.byEntity;
+                            surface.ShowControl = true;
+                            surface.AddTo(Eyeshot.ViewportLayout);
+                        }
+                        foreach (var surface in trimmedExtrusion)
+                        {
+
+                            surface.Color = Color.Red;
                             surface.ColorMethod = colorMethodType.byEntity;
                             surface.ShowControl = true;
                             surface.AddTo(Eyeshot.ViewportLayout);
