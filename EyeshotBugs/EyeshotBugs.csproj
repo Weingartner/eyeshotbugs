@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentBlockReferenceBug.cs" />
     <Compile Include="DropLoopsBugs.cs" />
     <Compile Include="EyeshotLicense.xaml.cs">
       <DependentUpon>EyeshotLicense.xaml</DependentUpon>
