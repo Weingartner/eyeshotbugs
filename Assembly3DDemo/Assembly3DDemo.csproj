@@ -37,10 +37,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL" />
-    <Reference Include="devDept.Geometry.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL" />
-    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL" />
-    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL" />
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Control.Wpf.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Dicom.Wpf.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Kinect.Wpf.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Geometry.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Geometry.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Graphics.Shaders.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Graphics.Wpf.v10.dll</HintPath>
+    </Reference>
     <Reference Include="ReactiveUI, Version=7.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\reactiveui-core.7.1.0\lib\Net45\ReactiveUI.dll</HintPath>
       <Private>True</Private>
@@ -141,13 +161,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Assembly3D\Assembly3D.csproj">
-      <Project>{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}</Project>
-      <Name>Assembly3D</Name>
-    </ProjectReference>
+    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
+    <ProjectReference Include="..\Assembly3D\Assembly3D.csproj">
+      <Project>{e59ae2fe-76d4-4e1e-be9d-1e79bb6275e9}</Project>
+      <Name>Assembly3D</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />
