@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeshotBugs", "EyeshotBugs.csproj", "{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3D", "..\Assembly3D\Assembly3D.csproj", "{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3DDemo", "Assembly3DDemo\Assembly3DDemo.csproj", "{FE7F611D-74B2-4776-973D-F2D229466CC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7F611D-74B2-4776-973D-F2D229466CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7F611D-74B2-4776-973D-F2D229466CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7F611D-74B2-4776-973D-F2D229466CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7F611D-74B2-4776-973D-F2D229466CC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

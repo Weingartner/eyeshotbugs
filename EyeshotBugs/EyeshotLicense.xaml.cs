@@ -16,7 +16,7 @@ namespace EyeshotBugs
         public PromptDialog(string question, string title, string defaultValue = "", InputType inputType = InputType.Text)
         {
             InitializeComponent();
-            this.Loaded += new RoutedEventHandler(PromptDialog_Loaded);
+            Loaded += PromptDialog_Loaded;
             txtQuestion.Text = question;
             Title = title;
             txtResponse.Text = defaultValue;
@@ -50,8 +50,7 @@ namespace EyeshotBugs
             {
                 if (_inputType == InputType.Password)
                     return txtPasswordResponse.Password;
-                else
-                    return txtResponse.Text;
+                return txtResponse.Text;
             }
         }
 

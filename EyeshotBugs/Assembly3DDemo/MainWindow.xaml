@@ -1,0 +1,58 @@
+﻿<Window   x:Class="Assembly3DDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Assembly3DDemo"
+        xmlns:ddes="http://schemas.devdept.com/winfx/2008/xaml/control"
+        xmlns:ddgr="http://schemas.devdept.com/winfx/2008/xaml/graphics"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        x:Name ="Root"
+        DataContext="{Binding ElementName=Root, Path=RingsViewModel}"
+          >
+    <DockPanel >
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <Button Command="{Binding Start}">Start</Button>
+            <Button Command="{Binding Stop}">Stop</Button>
+            <CheckBox IsChecked="{Binding IsSphere}">Use Spheres?</CheckBox>
+            
+        </StackPanel>
+        <ddes:ViewportLayout DockPanel.Dock="Top" x:Name="ViewportLayout" >
+            <ddes:ViewportLayout.Viewports>
+                <ddes:Viewport>
+                    <ddes:Viewport.OriginSymbol>
+                        <ddes:OriginSymbol Lighting="False"/>
+                    </ddes:Viewport.OriginSymbol>
+                    <ddes:Viewport.CoordinateSystemIcon>
+                        <ddes:CoordinateSystemIcon Lighting="False"/>
+                    </ddes:Viewport.CoordinateSystemIcon>
+                    <ddes:Viewport.ViewCubeIcon>
+                        <ddes:ViewCubeIcon Lighting="False"/>
+                    </ddes:Viewport.ViewCubeIcon>
+                    <ddes:Viewport.Background>
+                        <ddgr:BackgroundSettings StyleMode="Solid" TopColor="#FFEDEDED"/>
+                    </ddes:Viewport.Background>
+                    <ddes:Viewport.Grids>
+                        <ddes:Grid Step="10" Lighting="False"/>
+                    </ddes:Viewport.Grids>
+                    <ddes:Viewport.ToolBars>
+                        <ddes:ToolBar Position="HorizontalTopCenter">
+                            <ddes:ToolBar.Buttons>
+                                <ddes:HomeToolBarButton/>
+                                <ddes:MagnifyingGlassToolBarButton/>
+                                <ddes:ZoomWindowToolBarButton/>
+                                <ddes:ZoomToolBarButton/>
+                                <ddes:PanToolBarButton/>
+                                <ddes:RotateToolBarButton/>
+                                <ddes:ZoomFitToolBarButton/>
+                            </ddes:ToolBar.Buttons>
+                        </ddes:ToolBar>
+                    </ddes:Viewport.ToolBars>
+                </ddes:Viewport>
+            </ddes:ViewportLayout.Viewports>
+        </ddes:ViewportLayout>
+
+
+    </DockPanel>
+</Window>

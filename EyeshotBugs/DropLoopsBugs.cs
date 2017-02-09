@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
-using devDept.Graphics;
-using WeinCadSW;
+using EyeshotBugs.Utils;
 using Xunit;
 
 namespace EyeshotBugs
@@ -595,7 +594,7 @@ namespace EyeshotBugs
                                             .Select(p => new Point4D(p.X, p.Y, p.Z, p.W))
                                             .ToList();
                                         var degree = loopSubCurve.Order - 1;
-                                        return new devDept.Eyeshot.Entities.Curve
+                                        return new Curve
                                             (degree, loopSubCurve.KnotVectorU.ToArray(), loopCtrlPoints.ToArray());
                                     }));
                             return curve;

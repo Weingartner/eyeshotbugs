@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
-using EyeshotBugs;
-using Color = System.Drawing.Color;
-using ColorConverter = System.Drawing.ColorConverter;
-using Unit = System.Reactive.Unit;
-using static System.Drawing.Color;
 
-namespace WeinCadSW
+namespace EyeshotBugs.Utils
 {
     public static class Eyeshot
     {
-        private static Lazy<EyeshotWindow> _ViewLazy = new Lazy<EyeshotWindow>(Eyeshot.CreateEyeshotWindow);
+        private static Lazy<EyeshotWindow> _ViewLazy = new Lazy<EyeshotWindow>(CreateEyeshotWindow);
         public static EyeshotWindow ViewportLayout => _ViewLazy.Value;
         
         public static ViewportLayout CreateViewportLayout()
@@ -85,10 +81,10 @@ namespace WeinCadSW
             {
                 CoordinateSystemIcon = new CoordinateSystemIcon (),
                 OriginSymbol = new OriginSymbol(),
-                ViewCubeIcon = new ViewCubeIcon (),
+                ViewCubeIcon = new ViewCubeIcon ()
             };
             vp.Grids.Add(new Grid { Step = 10, AutoSize = true });
-            var toolbar = new ToolBar() {Position = ToolBar.positionType.HorizontalTopCenter};
+            var toolbar = new ToolBar {Position = ToolBar.positionType.HorizontalTopCenter};
             toolbar.Buttons.Add(new ZoomWindowToolBarButton());
             toolbar.Buttons.Add(new ZoomToolBarButton());
             toolbar.Buttons.Add(new PanToolBarButton());
@@ -121,7 +117,7 @@ namespace WeinCadSW
 
         public static EyeshotWindow CreateEyeshotWindow()
         {
-            var viewportLayout = Eyeshot.CreateViewportLayout();
+            var viewportLayout = CreateViewportLayout();
             var window = new EyeshotWindow(viewportLayout);
             window.Content = viewportLayout;
             window.Show();
