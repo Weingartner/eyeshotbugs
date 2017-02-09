@@ -30,20 +30,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v9">
-      <HintPath>..\dlls\devDept.Eyeshot.Control.Wpf.v9.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Control.Wpf.v10.dll</HintPath>
     </Reference>
-    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v9">
-      <HintPath>..\dlls\devDept.Eyeshot.Dicom.Wpf.v9.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Dicom.Wpf.v10.dll</HintPath>
     </Reference>
-    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v9">
-      <HintPath>..\dlls\devDept.Eyeshot.Kinect.Wpf.v9.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Eyeshot.Kinect.Wpf.v10.dll</HintPath>
     </Reference>
-    <Reference Include="devDept.Geometry.v9">
-      <HintPath>..\dlls\devDept.Geometry.v9.dll</HintPath>
+    <Reference Include="devDept.Geometry.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Geometry.v10.dll</HintPath>
     </Reference>
-    <Reference Include="devDept.Graphics.Wpf.v9">
-      <HintPath>..\dlls\devDept.Graphics.Wpf.v9.dll</HintPath>
+    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Graphics.Shaders.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.740.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\devDept.Graphics.Wpf.v10.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.11.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\FluentAssertions.4.11.0\lib\net45\FluentAssertions.dll</HintPath>

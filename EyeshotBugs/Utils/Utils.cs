@@ -84,16 +84,17 @@ namespace WeinCadSW
             var vp = new Viewport
             {
                 CoordinateSystemIcon = new CoordinateSystemIcon (),
-                ToolBar = { Position = ToolBar.positionType.HorizontalTopCenter },
                 OriginSymbol = new OriginSymbol(),
                 ViewCubeIcon = new ViewCubeIcon (),
             };
             vp.Grids.Add(new Grid { Step = 10, AutoSize = true });
-            vp.ToolBar.Buttons.Add(new ZoomWindowToolBarButton());
-            vp.ToolBar.Buttons.Add(new ZoomToolBarButton());
-            vp.ToolBar.Buttons.Add(new PanToolBarButton());
-            vp.ToolBar.Buttons.Add(new RotateToolBarButton());
-            vp.ToolBar.Buttons.Add(new ZoomFitToolBarButton());
+            var toolbar = new ToolBar() {Position = ToolBar.positionType.HorizontalTopCenter};
+            toolbar.Buttons.Add(new ZoomWindowToolBarButton());
+            toolbar.Buttons.Add(new ZoomToolBarButton());
+            toolbar.Buttons.Add(new PanToolBarButton());
+            toolbar.Buttons.Add(new RotateToolBarButton());
+            toolbar.Buttons.Add(new ZoomFitToolBarButton());
+            vp.ToolBars.Add(toolbar);
             return vp;
         }
 
