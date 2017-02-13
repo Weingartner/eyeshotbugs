@@ -33,10 +33,46 @@ namespace Weingartner.Eyeshot.Assembly3D
         public T Invoke<T>(Func<T> action) => Layout.Dispatcher.Invoke(action);
         public void Invalidate(bool withRegen) => Layout.InvalidateAndRegen(withRegen);
 
+        /// <summary>
+        /// Ensure that the CurrentBlockReference is cleared before manipulating the
+        /// viewport block list.
+        /// </summary>
+        /// <param name="viewportLayout"></param>
+        /// <param name="d"></param>
+        public static IDisposable UpdateBlockContext(ViewportLayout viewportLayout)
+        {
+            var stack = viewportLayout.Entities.CurrentBlockReferences;
+            foreach (var br in stack.Skip(1))
+                viewportLayout.Entities.SetCurrent(br);
+            viewportLayout.Entities.SetCurrent(null);
+
+            return Disposable.Create(() => viewportLayout.Entities.SetCurrentStack(stack));
+        }
+
+        /// <summary>
+        /// Ensure that the CurrentBlockReference is cleared before manipulating the
+        /// viewport block list.
+        /// </summary>
+        /// <param name="d"></param>
+        private void UpdateBlockContext(Action d)
+        {
+            using (UpdateBlockContext(Layout)) d();
+        }
+
+        /// <summary>
+        /// Add a block to the viewport and return an IDisposable which will remove
+        /// it when invoked.
+        /// </summary>
+        /// <param name="blockReferenceBlockName"></param>
+        /// <param name="block"></param>
+        /// <returns></returns>
         public IDisposable AddBlock(string blockReferenceBlockName, NamedBlock block)
         {
-            Layout.Blocks.Add(blockReferenceBlockName, block);
-            return Disposable.Create(() => Layout.Blocks.Remove(blockReferenceBlockName));
+            // Adding and removing blocks from the viewport layout requires first
+            // making sure that the viewportlayout.Entities.CurrentBlockStack is null.
+            // We restore it after adding our blocks.
+            UpdateBlockContext(() => Layout.Blocks.Add(blockReferenceBlockName, block));
+            return Disposable.Create(() => UpdateBlockContext(() => Layout.Blocks.Remove(blockReferenceBlockName)));
         }
 
         public IDisposable AddBlockReference(BlockReference blockReference)
