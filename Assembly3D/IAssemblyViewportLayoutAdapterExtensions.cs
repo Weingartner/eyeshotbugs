@@ -72,7 +72,6 @@ namespace Weingartner.Eyeshot.Assembly3D
                         , addToViewportLayout: true
                         );
 
-                    var d = assemblyViewportLayoutAdapter.SetCurrent(assembly3D.BlockReference);
 
                     assemblyViewportLayoutAdapter.Invalidate(true);
                     postAddAction?.Invoke();
@@ -80,7 +79,6 @@ namespace Weingartner.Eyeshot.Assembly3D
                     return Disposable.Create
                         (() =>
                         {
-                            d.Dispose();
                             assembly3D.Decompile();
                             invalidateRegistration.Dispose();
                             handler.Dispose();
