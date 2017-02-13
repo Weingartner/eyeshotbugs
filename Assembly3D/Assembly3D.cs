@@ -12,7 +12,6 @@ using devDept.Eyeshot.Labels;
 using devDept.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Point = devDept.Eyeshot.Entities.Point;
 
 namespace Weingartner.Eyeshot.Assembly3D
 {
