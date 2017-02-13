@@ -61,7 +61,6 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// viewport. Updating this property will automatically update the viewport. There
         /// is no need to manually invalidate the viewport.
         /// </summary>
-        Transformation _Transformation;
 
         private Action<Action, bool> _Invoker;
         private readonly ISubject<int> _MouseEnterObservable = new Subject<int>();
@@ -81,11 +80,7 @@ namespace Weingartner.Eyeshot.Assembly3D
             }, regen);
         }
 
-        public Transformation Transformation
-        {
-            get { return _Transformation; }
-            set { AssertCorrectThread(); this.RaiseAndSetIfChanged(ref _Transformation, value); }
-        }
+        [Reactive]public Transformation Transformation { get; set; }
 
         private void AssertCorrectThread()
         {
@@ -220,6 +215,7 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// </summary>
         public Assembly3D() 
         {
+            PropertyChanged += (s,o)=>AssertCorrectThread();
 
             _Invoker = (action, regen) => {
                 action();
