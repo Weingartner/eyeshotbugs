@@ -15,6 +15,13 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
             <Button Command="{Binding Start}">Start</Button>
             <Button Command="{Binding Stop}">Stop</Button>
+            <Button Command="{Binding ClearSelections}">Clear Selections</Button>
+            <ComboBox SelectedIndex="{Binding SelectedRingIndex}">
+                <ComboBox.Items>
+                    <Label>Ring0</Label>
+                    <Label>Ring1</Label>
+                </ComboBox.Items>
+            </ComboBox>
             <CheckBox IsChecked="{Binding IsSphere}">Use Spheres?</CheckBox>
             
         </StackPanel>

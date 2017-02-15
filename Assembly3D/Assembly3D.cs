@@ -94,6 +94,23 @@ namespace Weingartner.Eyeshot.Assembly3D
             return this;
         }
 
+        public Stack<BlockReference> BlockReferenceStack
+        {
+            get
+            {
+                var childToParent = new List<BlockReference>();
+                var parent = this;
+                while (parent != null)
+                {
+                    childToParent.Add(parent.BlockReference);
+                    parent = parent.Parent;
+                }
+
+                return new Stack<BlockReference>(((IEnumerable<BlockReference>)childToParent).Reverse());
+
+            }
+        }
+
         public Assembly3D Add(Entity e)
         {
             AssertCorrectThread();

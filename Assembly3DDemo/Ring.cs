@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
@@ -11,17 +12,34 @@ namespace Assembly3DDemo
     public class Ring : Assembly3D
     {
         [Reactive] public bool IsSphere { get; set;}
+        [Reactive] public bool Active { get; set;}
 
         public Ring()
         {
             this.WhenAnyValue(p => p.IsSphere)
-                .Subscribe(v => Replace(MakeRing(v)));
+                .ObserveOn(this)
+                .Subscribe(v =>
+                {
+                    Clear();
+                    Add(MakeRing(v));
+                });
+
+            this.WhenAnyValue(p => p.Active)
+                .ObserveOn(this)
+                .Subscribe
+                (active =>
+                {
+                    foreach (var e in this.Block.Entities)
+                    {
+                        e.SetColor(active ? Color.Green : Color.Gray);
+                    }
+                });
+
         }
         
-        private static Assembly3D MakeRing(bool isSphere)
+        private static IEnumerable<Entity> MakeRing(bool isSphere)
         {
             var d = 10;
-            var ring = new Assembly3D();
             for (int i = 0; i < d; i++)
             {
 
@@ -31,9 +49,8 @@ namespace Assembly3DDemo
                 mesh.SetColor(Color.Green);
                 mesh.Translate(20, 0, 0);
                 mesh.Rotate(Math.PI * 2 / d * i, Vector3D.AxisZ);
-                ring.Add(mesh);
+                yield return mesh;
             }
-            return ring;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
@@ -122,8 +123,11 @@ namespace EyeshotBugs
                     block1.Entities.Add(br2);
 
                     viewportLayout.Entities.Add(br1);
+                    var stack = new Stack<BlockReference>();
+                    stack.Push(br1);
                     if (setCurrent)
-                        viewportLayout.SetCurrent(br1);
+                        viewportLayout.SetSelectionScope(stack);
+
 
                     var adapter = new AssemblyEyeshotViewportAdapter(viewportLayout);
                     adapter.Invoke
@@ -136,8 +140,8 @@ namespace EyeshotBugs
                             block1.Entities.Count.Should().Be(0);
 
                             // Set the block reference stack to null
-                            if(setCurrent)
-                                viewportLayout.Entities.SetCurrent(null);
+                            //if(setCurrent)
+                            //    viewportLayout.Entities.SetCurrent(null);
                             block1.Entities.Count.Should().Be(0); // NOTE : Test fails here
 
                             // Remove the top level block
@@ -145,8 +149,8 @@ namespace EyeshotBugs
                             block1.Entities.Count.Should().Be(0);
 
                             // Set the stack back to what it was before;
-                            if(setCurrent)
-                                viewportLayout.Entities.SetCurrent(br1);
+                            //if(setCurrent)
+                            //    viewportLayout.Entities.SetCurrent(br1);
                             block1.Entities.Count.Should().Be(0);
 
                             block1.Entities.Count.Should().Be(0);

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
 using devDept.Eyeshot;
+using devDept.Eyeshot.Entities;
 using ReactiveUI;
 using Weingartner.Eyeshot.Assembly3D;
 
@@ -33,7 +35,23 @@ namespace Assembly3DDemo
             // binding when the control is not visible. This prevents
             // memory leaks
             this.LoadUnloadHandler
-                (() => ViewportLayout.BindToViewport(this.WhenAnyValue(p => p.RingsViewModel)));
+                (() =>
+                {
+                    // Bind the main viewmodel to the viewport
+                    var c = new CompositeDisposable();
+                    ViewportLayout.BindToViewport(this.WhenAnyValue(p => p.RingsViewModel))
+                    .DisposeWith(c);
+
+                    ViewportLayout.ActionMode = actionType.SelectVisibleByPick;
+
+                    // Set the selection scope to the active ring
+                    this.WhenAnyValue(p => p.RingsViewModel.ActiveRing, p => p.RingsViewModel.IsCompiled, (activeRing, isCompiled)=>new {activeRing, isCompiled})
+                        .Where(o => o.isCompiled)
+                        .Subscribe(o => ViewportLayout.SetSelectionScope(o.activeRing.BlockReferenceStack))
+                        .DisposeWith(c);
+
+                    return (IDisposable)c;
+                });
         }
     }
 }
