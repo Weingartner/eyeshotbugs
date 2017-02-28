@@ -28,7 +28,7 @@ namespace Assembly3DDemo
         {
             InitializeComponent();
 
-            RingsViewModel = new RingsViewModel();
+            RingsViewModel = new RingsViewModel(ViewportLayout);
 
             // Bind the assembly property to the viewport.
             // Use the LoadUnloadHandler to dispose / decompile the
@@ -49,6 +49,31 @@ namespace Assembly3DDemo
                         .Where(o => o.isCompiled)
                         .Subscribe(o => ViewportLayout.SetSelectionScope(o.activeRing.BlockReferenceStack))
                         .DisposeWith(c);
+
+                    this.WhenAnyValue(p => p.RingsViewModel.SelectionModeIndex)
+                        .Subscribe
+                        (i =>
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    ViewportLayout.SelectionFilterMode = selectionFilterType.Entity;
+                                    break;
+                                case 1:
+                                    ViewportLayout.SelectionFilterMode = selectionFilterType.Face;
+                                    break;
+                            }
+
+                        });
+
+                    ViewportLayout
+                        .SelectionChangedObservable()
+                        .Subscribe
+                        (s =>
+                        {
+                            RingsViewModel.PushSelection(s);
+
+                        });
 
                     return (IDisposable)c;
                 });

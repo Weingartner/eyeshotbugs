@@ -16,10 +16,17 @@
             <Button Command="{Binding Start}">Start</Button>
             <Button Command="{Binding Stop}">Stop</Button>
             <Button Command="{Binding ClearSelections}">Clear Selections</Button>
+            <Button Command="{Binding PopSelectionCommand}">Pop selection</Button>
             <ComboBox SelectedIndex="{Binding SelectedRingIndex}">
                 <ComboBox.Items>
                     <Label>Ring0</Label>
                     <Label>Ring1</Label>
+                </ComboBox.Items>
+            </ComboBox>
+            <ComboBox SelectedIndex="{Binding SelectionModeIndex}">
+                <ComboBox.Items>
+                    <Label>Entity</Label>
+                    <Label>Face</Label>
                 </ComboBox.Items>
             </ComboBox>
             <CheckBox IsChecked="{Binding IsSphere}">Use Spheres?</CheckBox>
