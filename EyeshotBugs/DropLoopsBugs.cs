@@ -620,6 +620,13 @@ namespace EyeshotBugs
         }
 
 
+        [Fact]
+        public void Solid3DIntersectDoesNotWork()
+        {
+            
+        }
+
+
 
         [Fact]
         public async Task AnotherDropLoopsBug()

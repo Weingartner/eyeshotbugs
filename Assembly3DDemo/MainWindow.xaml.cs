@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
@@ -71,9 +72,15 @@ namespace Assembly3DDemo
                         .Subscribe
                         (s =>
                         {
+                            Console.WriteLine("SelectionEvent");
+                            Console.WriteLine($"   Added {String.Join(", ", s.AddedItems.Select(a=>$"{a.Item.GetHashCode()}"))}");
+                            Console.WriteLine($"   Removed {String.Join(", ", s.RemovedItems.Select(a=>$"{a.Item.GetHashCode()}"))}");
                             RingsViewModel.PushSelection(s);
 
                         });
+
+                    //ViewportLayout.Rendered.ShowEdges = false;
+                    ViewportLayout.Viewports[0].DisplayMode = displayType.Rendered;
 
                     return (IDisposable)c;
                 });

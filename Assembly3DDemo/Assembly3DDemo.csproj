@@ -37,37 +37,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Eyeshot.Control.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Eyeshot.Dicom.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Eyeshot.Kinect.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Geometry.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Geometry.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Graphics.Shaders.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.759.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\devDept.Graphics.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\reactiveui-core.7.0.0\lib\Net45\ReactiveUI.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Control.Wpf.v10.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ReactiveUI.Fody.Helpers, Version=2.0.66.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ReactiveUI.Fody.2.0.66\lib\net45\ReactiveUI.Fody.Helpers.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v10, Version=10.0.991.0, Culture=neutral, PublicKeyToken=7de2103b168f3266, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Dicom.Wpf.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v10, Version=10.0.991.0, Culture=neutral, PublicKeyToken=d8600511cdfbbbc7, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Kinect.Wpf.v10.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Geometry.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Geometry.v10.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Graphics.Shaders.v10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Graphics.Wpf.v10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ReactiveUI, Version=7.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\reactiveui-core.7.4.0\lib\Net45\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Fody.Helpers, Version=2.2.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\ReactiveUI.Fody.2.2.9\lib\net45\ReactiveUI.Fody.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Splat.1.6.2\lib\Net45\Splat.dll</HintPath>
@@ -111,6 +107,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Xunit.StaFact, Version=0.2.0.0, Culture=neutral, PublicKeyToken=593f35978b459a4b, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\Xunit.StaFact.0.2.3-beta\lib\net452\Xunit.StaFact.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -170,15 +178,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
+    <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />
+  <Import Project="$(SolutionDir)packages\Fody.2.1.0\build\netstandard1.0\Fody.targets" Condition="Exists('$(SolutionDir)packages\Fody.2.1.0\build\netstandard1.0\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.3\build\Fody.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Fody.2.1.0\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Fody.2.1.0\build\netstandard1.0\Fody.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

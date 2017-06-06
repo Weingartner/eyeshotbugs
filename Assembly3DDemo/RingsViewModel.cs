@@ -128,7 +128,7 @@ namespace Assembly3DDemo
         private void PopSelection()
         {
             // Clear all the current selections
-            ActiveRing.Block.Entities.ForEach(e=>e.ClearAllInstancesSelection());
+            ActiveRing.Block.Entities.ForEach(e=>e.ClearSelectionForAllInstances());
             ActiveRing.Block.Entities.ForEach(e=>(e as IFaceSelectable)?.ClearFacesSelectionForAllInstances());
 
             if (SelectionStack.Count == 0)
