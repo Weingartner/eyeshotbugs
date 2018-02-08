@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
+using devDept.Graphics;
 using EyeshotBugs.Utils;
 using Weingartner.Eyeshot.Assembly3D;
 using Xunit;
@@ -72,7 +73,13 @@ namespace EyeshotBugs
                 var p2 = new Point3D(Diameter / 2, 0, Zero + Length);
                 var p3 = new Point3D(Diameter / 2, 0, Zero);
 
-                var curve = new LinearPath(p0, p1, p2, p3, p0);
+                //var curve = new LinearPath(p0, p1, p2, p3, p0);
+                var curve = new LinearPath( p1, p2, p3, p0);
+
+                // Dumb hack to make the surface of revolution have
+                // normals in the correct direction. 
+                // See https://devdept.zendesk.com/hc/en-us/requests/11058?page=1
+                curve.Reverse();
 
                 return curve;
             }
@@ -80,7 +87,7 @@ namespace EyeshotBugs
 
         public Line Axis => new Line(new Point3D(0, 0, Zero), new Point3D(0, 0, Zero + Length));
 
-        public Solid3D Solid => SurfaceOfRevolutionCurve.RevolveAsSolid3D(0, System.Math.PI * 2, Axis);
+        public Solid3D Solid => SurfaceOfRevolutionCurve.RevolveAsSolid3D(0, System.Math.PI * 2, Axis,1e-9);
     }
 
 
@@ -103,6 +110,7 @@ namespace EyeshotBugs
             var closed = false;
             Eyeshot.ViewportLayout.ClosedTask.ContinueWith( _=>closed=true );
 
+            Eyeshot.ViewportLayout.ViewportLayout.Backface.ColorMethod = backfaceColorMethodType.Cull;
 
 
 
