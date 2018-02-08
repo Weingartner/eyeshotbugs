@@ -32,26 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Control.Wpf.v10.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Eyeshot.Control.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Eyeshot.Dicom.Wpf.v10, Version=10.0.991.0, Culture=neutral, PublicKeyToken=7de2103b168f3266, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Dicom.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Eyeshot.Kinect.Wpf.v10, Version=10.0.991.0, Culture=neutral, PublicKeyToken=d8600511cdfbbbc7, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Eyeshot.Kinect.Wpf.v10.dll</HintPath>
-    </Reference>
-    <Reference Include="devDept.Geometry.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Geometry.v10.dll</HintPath>
+    <Reference Include="devDept.Geometry.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Geometry.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Shaders.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Graphics.Shaders.v10.dll</HintPath>
+    <Reference Include="devDept.Graphics.Shaders.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Graphics.Shaders.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Wpf.v10, Version=10.0.1031.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\devDept.Eyeshot.10.0.1031\lib\net40\devDept.Graphics.Wpf.v10.dll</HintPath>
+    <Reference Include="devDept.Graphics.Wpf.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Graphics.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />

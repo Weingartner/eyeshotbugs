@@ -29,6 +29,8 @@ namespace Assembly3DDemo
         {
             InitializeComponent();
 
+            EyeshotBugs.Utils.Eyeshot.Unlock(ViewportLayout);
+
             RingsViewModel = new RingsViewModel(ViewportLayout);
 
             // Bind the assembly property to the viewport.

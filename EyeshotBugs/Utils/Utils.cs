@@ -53,7 +53,7 @@ namespace EyeshotBugs.Utils
             return vpl;
         }
 
-        private static void Unlock(ViewportLayout vpl)
+        public static void Unlock(ViewportLayout vpl)
         {
             var licenseFile = @".\eyeshotlicense.txt";
             if (!File.Exists(licenseFile))

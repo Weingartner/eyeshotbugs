@@ -56,7 +56,7 @@ namespace Weingartner.Eyeshot.Assembly3D
             viewportLayout.ValidateViewportEntities(entityList);
             foreach (var block in viewportLayout.Blocks)
             {
-                viewportLayout.ValidateViewportEntities(block.Value.Entities);
+                viewportLayout.ValidateViewportEntities(block.Entities);
             }
         }
 
@@ -67,7 +67,7 @@ namespace Weingartner.Eyeshot.Assembly3D
                 var blockRef = entity as BlockReference;
                 if (blockRef != null)
                 {
-                    if (!viewportLayout.Blocks.ContainsKey(blockRef.BlockName))
+                    if (!viewportLayout.Blocks.Contains(blockRef.BlockName))
                         throw new Exception($"Block {blockRef.BlockName} not found in viewport layout");
 
                     var block = viewportLayout.Blocks[blockRef.BlockName];
