@@ -9,6 +9,7 @@ using devDept.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Weingartner.Eyeshot.Assembly3D;
+using Weingartner.EyeShot.Assembly3D;
 
 namespace Assembly3DDemo
 {
@@ -24,7 +25,7 @@ namespace Assembly3DDemo
             var period = 1.0 / frameRate;
             var rotation = 1.0; // radian per second
             return Observable.Interval(TimeSpan.FromSeconds(period), RxApp.MainThreadScheduler)
-                             .ObserveOn(this)
+                             .ObserveOn(this, false)
                              .Subscribe
                              (t =>
                              {
@@ -82,7 +83,7 @@ namespace Assembly3DDemo
             rings.Add(Ring1);
 
             this.WhenAnyValue(p => p.IsSphere)
-                .ObserveOn(this)
+                .ObserveOn(this, false)
                 .Subscribe
                 (v =>
                 {

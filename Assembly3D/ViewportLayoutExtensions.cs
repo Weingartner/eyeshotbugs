@@ -111,16 +111,6 @@ namespace Weingartner.Eyeshot.Assembly3D
                 )
                 .Select(e=>e.EventArgs);
         }
-
-        public static IDisposable BindToViewport(this ViewportLayout viewportLayout, IObservable<Assembly3D> assemblyObserver)
-        {
-            return new AssemblyEyeshotViewportAdapter(viewportLayout)
-                .BindAssemblyToViewport (assemblyObserver, () => { });
-        }
-        public static IDisposable BindToViewport(this ViewportLayout viewportLayout, Assembly3D assembly)
-        {
-            return BindToViewport(viewportLayout, Observable.Return(assembly));
-        }
     }
 
 }

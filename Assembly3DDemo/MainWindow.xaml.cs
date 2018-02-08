@@ -42,8 +42,9 @@ namespace Assembly3DDemo
                 {
                     // Bind the main viewmodel to the viewport
                     var c = new CompositeDisposable();
-                    ViewportLayout.BindToViewport(this.WhenAnyValue(p => p.RingsViewModel))
-                    .DisposeWith(c);
+                    this.WhenAnyValue( p => p.RingsViewModel )
+                        .SubscribeDisposable( model => model.BindToViewportLayout( ViewportLayout ) )
+                        .DisposeWith( c );
 
                     ViewportLayout.ActionMode = actionType.SelectVisibleByPick;
 

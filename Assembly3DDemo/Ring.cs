@@ -6,6 +6,7 @@ using devDept.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Weingartner.Eyeshot.Assembly3D;
+using Weingartner.EyeShot.Assembly3D;
 
 namespace Assembly3DDemo
 {
@@ -25,7 +26,7 @@ namespace Assembly3DDemo
                 });
 
             this.WhenAnyValue(p => p.Active)
-                .ObserveOn(this)
+                .ObserveOn(this, false)
                 .Subscribe
                 (active =>
                 {
