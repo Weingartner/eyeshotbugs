@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3DDemo", "Assembly3DDemo\Assembly3DDemo.csproj", "{FE7F611D-74B2-4776-973D-F2D229466CC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3D", "Assembly3D\Assembly3D.csproj", "{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeshotBugs", "EyeshotBugs\EyeshotBugs.csproj", "{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESBug12720", "ESBug12720\ESBug12720.csproj", "{34AA017C-AD52-4076-82FE-BB0EC775B5FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +29,15 @@ Global
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40DF6C77-5945-4C94-82EE-13EACAB7DC23}
 	EndGlobalSection
 EndGlobal

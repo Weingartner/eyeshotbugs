@@ -10,6 +10,8 @@
     <RootNamespace>EyeshotBugs</RootNamespace>
     <AssemblyName>EyeshotBugs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -127,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bug12720.cs" />
     <Compile Include="DropLoopsBugs.cs" />
     <Compile Include="EyeshotLicense.xaml.cs">
       <DependentUpon>EyeshotLicense.xaml</DependentUpon>
