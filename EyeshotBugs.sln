@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3D", "Assembly3D\As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeshotBugs", "EyeshotBugs\EyeshotBugs.csproj", "{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESBug12720", "ESBug12720\ESBug12720.csproj", "{34AA017C-AD52-4076-82FE-BB0EC775B5FC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34AA017C-AD52-4076-82FE-BB0EC775B5FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

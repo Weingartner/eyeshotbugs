@@ -32,20 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Eyeshot.Control.Wpf.v11.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Eyeshot.Control.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Geometry.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Geometry.v11.dll</HintPath>
+    <Reference Include="devDept.Geometry.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Geometry.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Shaders.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Graphics.Shaders.v11.dll</HintPath>
+    <Reference Include="devDept.Graphics.Shaders.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Graphics.Shaders.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Wpf.v11, Version=11.0.433.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.433\lib\net40\devDept.Graphics.Wpf.v11.dll</HintPath>
+    <Reference Include="devDept.Graphics.Wpf.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Graphics.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LanguageExt.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
