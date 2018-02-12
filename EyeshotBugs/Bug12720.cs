@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
@@ -15,6 +10,8 @@ namespace EyeshotBugs
 {
     public class Bug12720
     {
+        
+
         [Fact]
         public async Task ShouldWork()
         {
@@ -32,31 +29,16 @@ namespace EyeshotBugs
 
                     vpl.Blocks.Add( block );
                     vpl.Entities.Add(blockRef  );
+                    await Task.Delay( TimeSpan.FromMilliseconds( 100 ) );
                     vpl.ZoomFit();
 
-                    var ct = new CancellationTokenSource();
+                    var transform = new Identity();
 
-                    //await Eyeshot.ViewportLayout.ClosedTask;
-
-
-                    var angle = 0;
-                    var d = Observable
-                           .Interval( TimeSpan.FromMilliseconds( 100 ) )
-                           .ObserveOnDispatcher()
-                           .Subscribe
-                                ( _ =>
-                                {
-                                    angle += 5;
-                                    var transform = new Rotation( angle * Math.PI/180, Vector3D.AxisZ );
-                                    blockRef.Transformation = transform;
-                                    //If you uncomment the Regen command then it works. Not necessary in ES10
-                                    //vpl.Entities.Regen(  );
-                                    vpl.Invalidate();
-
-                                } );
+                    // Comment out the below line and the bar
+                    // will be visible.
+                    blockRef.Transformation = transform;
 
                     await Eyeshot.ViewportLayout.ClosedTask;
-                    d.Dispose();
 
                 } );
         }
