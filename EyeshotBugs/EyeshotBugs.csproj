@@ -131,6 +131,7 @@
   <ItemGroup>
     <Compile Include="Bug12720.cs" />
     <Compile Include="Bug12783.cs" />
+    <Compile Include="Bug12788.cs" />
     <Compile Include="DropLoopsBugs.cs" />
     <Compile Include="EyeshotLicense.xaml.cs">
       <DependentUpon>EyeshotLicense.xaml</DependentUpon>
