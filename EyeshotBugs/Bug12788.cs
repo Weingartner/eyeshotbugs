@@ -37,7 +37,6 @@ namespace EyeshotBugs
                     block.RegenAllCurved( new RegenParams( 0.1, vpl ) );
 
 
-
                     await Eyeshot.ViewportLayout.ClosedTask;
 
                 } );

@@ -34,20 +34,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="devDept.Eyeshot.Control.Wpf.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Eyeshot.Control.Wpf.v11.dll</HintPath>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v11, Version=11.0.545.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.545\lib\net40\devDept.Eyeshot.Control.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Geometry.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Geometry.v11.dll</HintPath>
+    <Reference Include="devDept.Geometry.v11, Version=11.0.545.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.545\lib\net40\devDept.Geometry.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Shaders.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Graphics.Shaders.v11.dll</HintPath>
+    <Reference Include="devDept.Graphics.Shaders.v11, Version=11.0.545.0, Culture=neutral, PublicKeyToken=54ce5f5f803e4b42, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.545\lib\net40\devDept.Graphics.Shaders.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="devDept.Graphics.Wpf.v11, Version=11.0.434.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
-      <HintPath>..\packages\devDept.Eyeshot.11.0.434\lib\net40\devDept.Graphics.Wpf.v11.dll</HintPath>
+    <Reference Include="devDept.Graphics.Wpf.v11, Version=11.0.545.0, Culture=neutral, PublicKeyToken=f3cd437f0d8061b5, processorArchitecture=MSIL">
+      <HintPath>..\packages\devDept.Eyeshot.11.0.545\lib\net40\devDept.Graphics.Wpf.v11.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
@@ -132,6 +132,7 @@
     <Compile Include="Bug12720.cs" />
     <Compile Include="Bug12783.cs" />
     <Compile Include="Bug12788.cs" />
+    <Compile Include="Bug13207.cs" />
     <Compile Include="DropLoopsBugs.cs" />
     <Compile Include="EyeshotLicense.xaml.cs">
       <DependentUpon>EyeshotLicense.xaml</DependentUpon>
@@ -160,6 +161,9 @@
       <Project>{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}</Project>
       <Name>Assembly3D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
