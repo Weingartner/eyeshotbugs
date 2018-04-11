@@ -17,7 +17,7 @@ namespace EyeshotBugs
     public class Bug13207
     {
         [Fact]
-        public async void GridBoxSizeChangesRandomly()
+        public async void GridBorderChanges()
         {
             await Eyeshot.RunSTADesktop
             (async () =>
