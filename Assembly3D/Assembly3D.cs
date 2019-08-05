@@ -17,6 +17,7 @@ using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using LanguageExt;
 using ReactiveUI;
+using ReactiveUI.Legacy;
 using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.Eyeshot.Assembly3D.Weingartner.EyeShot;
 using Weingartner.EyeShot.Assembly3D.Weingartner.Utils;

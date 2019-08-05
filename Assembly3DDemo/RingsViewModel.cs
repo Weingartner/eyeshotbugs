@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
+using LanguageExt;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Weingartner.Eyeshot.Assembly3D;
@@ -43,12 +44,12 @@ namespace Assembly3DDemo
 
 
         private readonly SerialDisposable _AnimationControl = new SerialDisposable();
-        public ReactiveCommand Start { get; }
-        public ReactiveCommand Stop { get; }
-        public ReactiveCommand PopSelectionCommand { get; }
+        public ReactiveCommand<System.Reactive.Unit,IDisposable> Start { get; }
+        public ReactiveCommand<System.Reactive.Unit,IDisposable>  Stop { get; }
+        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  PopSelectionCommand { get; }
         [Reactive] public bool IsSphere { get; set;}
 
-        public ReactiveCommand ClearSelections { get; }
+        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  ClearSelections { get; }
         [Reactive] public int SelectedRingIndex { get; set;}
         [Reactive] public int SelectionModeIndex{ get; set;}
 
@@ -58,7 +59,7 @@ namespace Assembly3DDemo
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public ReactiveCommand CreateEyeshotCommand(Action a)=>ReactiveCommand.Create(()=>ActiveRing.Invoke(a, true));
+        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  CreateEyeshotCommand(Action a)=>ReactiveCommand.Create(()=>ActiveRing.Invoke(a, true));
 
         public RingsViewModel(ViewportLayout viewportLayout)
         {
