@@ -32,8 +32,8 @@
             <CheckBox IsChecked="{Binding IsSphere}">Use Spheres?</CheckBox>
             
         </StackPanel>
-        <ddes:ViewportLayout DockPanel.Dock="Top" x:Name="ViewportLayout" >
-            <ddes:ViewportLayout.Viewports>
+        <ddes:Model DockPanel.Dock="Top" x:Name="ViewportLayout" >
+            <ddes:Model.Viewports>
                 <ddes:Viewport>
                     <ddes:Viewport.OriginSymbol>
                         <ddes:OriginSymbol Lighting="False"/>
@@ -64,8 +64,8 @@
                         </ddes:ToolBar>
                     </ddes:Viewport.ToolBars>
                 </ddes:Viewport>
-            </ddes:ViewportLayout.Viewports>
-        </ddes:ViewportLayout>
+            </ddes:Model.Viewports>
+        </ddes:Model>
 
 
     </DockPanel>

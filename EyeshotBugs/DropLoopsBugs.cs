@@ -612,7 +612,7 @@ namespace EyeshotBugs
                         nurb.AddTo(Eyeshot.ViewportLayout);
                     }
                     eyeshotSurface.AddTo(Eyeshot.ViewportLayout);
-                    Eyeshot.ViewportLayout.ViewportLayout.ZoomFit();
+                    Eyeshot.ViewportLayout.Model.ZoomFit();
                     await Eyeshot.ViewportLayout.ClosedTask;
                 }));
 
@@ -670,7 +670,7 @@ namespace EyeshotBugs
                             surface.AddTo(Eyeshot.ViewportLayout);
                         }
 
-                        Eyeshot.ViewportLayout.ViewportLayout.ZoomFit();
+                        Eyeshot.ViewportLayout.Model.ZoomFit();
                         await Eyeshot.ViewportLayout.ClosedTask;
 
                     }));

@@ -19,7 +19,7 @@ namespace EyeshotBugs
             await Eyeshot.RunSTADesktop
                 ( async () =>
                 {
-                    var vpl = Eyeshot.ViewportLayout.ViewportLayout;
+                    var vpl = Eyeshot.ViewportLayout.Model;
 
                     var block = new Block("Foo");
                     var blockRef = new BlockReference( new Identity(), "Foo" );
@@ -52,7 +52,7 @@ namespace EyeshotBugs
             await Eyeshot.RunSTADesktop
                 ( async () =>
                 {
-                    var vpl = Eyeshot.ViewportLayout.ViewportLayout;
+                    var vpl = Eyeshot.ViewportLayout.Model;
 
                     var block = new Block("Foo");
                     var blockRef = new BlockReference( new Identity(), "Foo" );

@@ -4,12 +4,13 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
+using Environment = devDept.Eyeshot.Environment;
 
 namespace Weingartner.Eyeshot.Assembly3D
 {
     public static class ViewportLayoutExtensions
     {
-        public static void InvalidateAndRegen(this ViewportLayout vpl, bool withRegen=true)
+        public static void InvalidateAndRegen(this Model vpl, bool withRegen=true)
         {
             if(withRegen)
                 RegenAll(vpl);
@@ -21,7 +22,7 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// correctly regenerated.
         /// </summary>
         /// <param name="vpl"></param>
-        public static void RegenAll(this ViewportLayout vpl)
+        public static void RegenAll(this Model vpl)
         {
             if (vpl.renderContext == null)
                 return;
@@ -35,13 +36,7 @@ namespace Weingartner.Eyeshot.Assembly3D
             // `EntityList.RegenAllCurved(EntityList.VisualRefinementTolerance)`.
             vpl.Entities.Regen();
 
-            //on first load the VisualRefinementTolerance seems to be to high, which
-            //caused serious polygon effect, therefore I added this hack...
-            var tol = vpl.Entities.VisualRefinementTolerance > 1e-4
-                          ? 1e-5
-                          : vpl.Entities.VisualRefinementTolerance;
-
-            vpl.Entities.RegenAllCurved(tol);
+            vpl.Entities.RegenAllCurved(1e-5);
             vpl.Labels.Regen();
         }
 
@@ -50,7 +45,7 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// in the viewport layout
         /// </summary>
         /// <param name="viewportLayout"></param>
-        public static void ValidateViewportLayout(this ViewportLayout viewportLayout)
+        public static void ValidateViewportLayout(this Model viewportLayout)
         {
             var entityList = viewportLayout.Entities;
             viewportLayout.ValidateViewportEntities(entityList);
@@ -60,7 +55,7 @@ namespace Weingartner.Eyeshot.Assembly3D
             }
         }
 
-        private static void ValidateViewportEntities(this ViewportLayout viewportLayout, IEnumerable<Entity> entityList)
+        private static void ValidateViewportEntities(this Model viewportLayout, IEnumerable<Entity> entityList)
         {
             foreach (var entity in entityList)
             {
@@ -85,27 +80,27 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// <param name="key"></param>
         /// <param name="block"></param>
         /// <returns></returns>
-        public static IDisposable AddBlock(this ViewportLayout vpl, string key, Block block)
+        public static IDisposable AddBlock(this Model vpl, string key, Block block)
         {
             vpl.Blocks.Add(key, block);
             return Disposable.Create(() => vpl.Blocks.Remove(key));
         }
 
-        public static IDisposable AddEntity(this ViewportLayout vpl, Entity entity)
+        public static IDisposable AddEntity(this Model vpl, Entity entity)
         {
             vpl.Entities.Add(entity);
             return Disposable.Create(() => vpl.Entities.Remove(entity));
         }
 
-        public static IDisposable SetCurrent(this ViewportLayout vpl, BlockReference blkRef)
+        public static IDisposable SetCurrent(this Model vpl, BlockReference blkRef)
         {
             vpl.Entities.SetCurrent(blkRef);
             return Disposable.Create( () => vpl.Entities.SetCurrent(null));
         }
 
-        public static IObservable<ViewportLayout.SelectionChangedEventArgs> SelectionChangedObservable(this ViewportLayout viewport)
+        public static IObservable<Environment.SelectionChangedEventArgs> SelectionChangedObservable(this Model viewport)
         {
-            return Observable.FromEventPattern<ViewportLayout.SelectionChangedEventHandler, ViewportLayout.SelectionChangedEventArgs>
+            return Observable.FromEventPattern<Environment.SelectionChangedEventHandler, Environment.SelectionChangedEventArgs>
                 ( h=>viewport.SelectionChanged+=h
                   , h=>viewport.SelectionChanged-=h
                 )

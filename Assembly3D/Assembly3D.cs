@@ -35,7 +35,7 @@ namespace Weingartner.EyeShot.Assembly3D
     }
 
     /// <summary>
-    /// This class represents an heirarchial assembly of objects in a cleaner way
+    /// This class represents an hierarchical assembly of objects in a cleaner way
     /// than EyeShot naturally allows. You don't have to manually create block
     /// references and add them to the viewport and manually refresh the viewport
     /// if you wish to change the transformations and animate.
@@ -462,9 +462,9 @@ namespace Weingartner.EyeShot.Assembly3D
         }
 
         private static bool _InvalidateWaiting;
-        private static readonly System.Collections.Generic.HashSet<ViewportLayout> _ViewportsToInvalidate = new System.Collections.Generic.HashSet<ViewportLayout>();
+        private static readonly System.Collections.Generic.HashSet<Model> _ViewportsToInvalidate = new System.Collections.Generic.HashSet<Model>();
 
-        public static async void Invalidate(ViewportLayout viewport)
+        public static async void Invalidate(Model viewport)
         {
             viewport.Invalidate();
             return;
@@ -563,7 +563,7 @@ namespace Weingartner.EyeShot.Assembly3D
         /// <returns></returns>
         public void Compile
             ( Action<Action, bool> invoker
-            , ViewportLayout assemblyViewport
+            , Model assemblyViewport
             , bool addToViewportLayout = false)
         {
             if (IsCompiled)
@@ -607,7 +607,7 @@ namespace Weingartner.EyeShot.Assembly3D
             Regen();
         }
 
-        protected virtual IDisposable OnCompiled(ViewportLayout assemblyViewport)
+        protected virtual IDisposable OnCompiled(Model assemblyViewport)
         {
             return Disposable.Empty;
         }
@@ -669,7 +669,7 @@ namespace Weingartner.EyeShot.Assembly3D
         #endregion
 
         private IDisposable _Subscriptions = Disposable.Empty;
-        public ViewportLayout AssemblyViewport { get; private set; }
+        public Model AssemblyViewport { get; private set; }
         private string _Name;
 
 
@@ -783,7 +783,7 @@ namespace Weingartner.EyeShot.Assembly3D
         /// <param name="viewportLayout"></param>
         /// <param name="assembly3D"></param>
         /// <param name="postAddAction"></param>
-        public IDisposable BindToViewportLayout(ViewportLayout viewportLayout, Action postAddAction =null)
+        public IDisposable BindToViewportLayout(Model viewportLayout, Action postAddAction =null)
         {
             return viewportLayout.Dispatcher.Invoke
                 (() =>

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Windows.Controls;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
-using LanguageExt;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.EyeShot.Assembly3D;
+using Environment = devDept.Eyeshot.Environment;
 
 namespace Assembly3DDemo
 {
     public class RingsViewModel : Assembly3D
     {
-        private readonly ViewportLayout _ViewportLayout;
+        public  Model Model;
 
         private double _Angle = 0.0;
 
@@ -35,6 +35,7 @@ namespace Assembly3DDemo
                                  Ring1.Transformation = new Rotation(-_Angle, Vector3D.AxisZ) 
                                                         * new Rotation(Math.PI/2,Vector3D.AxisX) 
                                                         * new Translation(20 * Vector3D.AxisX);
+                                 Model.Invalidate();
 
                              });
 
@@ -44,12 +45,12 @@ namespace Assembly3DDemo
 
 
         private readonly SerialDisposable _AnimationControl = new SerialDisposable();
-        public ReactiveCommand<System.Reactive.Unit,IDisposable> Start { get; }
-        public ReactiveCommand<System.Reactive.Unit,IDisposable>  Stop { get; }
-        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  PopSelectionCommand { get; }
+        public ReactiveCommand<Unit,IDisposable> Start { get; }
+        public ReactiveCommand<Unit,IDisposable>  Stop { get; }
+        public ReactiveCommand<Unit,Unit>  PopSelectionCommand { get; }
         [Reactive] public bool IsSphere { get; set;}
 
-        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  ClearSelections { get; }
+        public ReactiveCommand<Unit,Unit>  ClearSelections { get; }
         [Reactive] public int SelectedRingIndex { get; set;}
         [Reactive] public int SelectionModeIndex{ get; set;}
 
@@ -59,11 +60,11 @@ namespace Assembly3DDemo
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public ReactiveCommand<System.Reactive.Unit,System.Reactive.Unit>  CreateEyeshotCommand(Action a)=>ReactiveCommand.Create(()=>ActiveRing.Invoke(a, true));
+        public ReactiveCommand<Unit,Unit>  CreateEyeshotCommand(Action a)=>ReactiveCommand.Create(()=>ActiveRing.Invoke(a, true));
 
-        public RingsViewModel(ViewportLayout viewportLayout)
+        public RingsViewModel(Model viewportLayout)
         {
-            _ViewportLayout = viewportLayout;
+            Model = viewportLayout;
             var rings = new Assembly3D();
 
             Start = ReactiveCommand.Create(()=>_AnimationControl.Disposable = Animate());
@@ -115,10 +116,10 @@ namespace Assembly3DDemo
         [Reactive] public Ring Ring1 { get; set; }
         [Reactive] public Ring ActiveRing { get; set; }
 
-        private Stack<ViewportLayout.SelectionChangedEventArgs> SelectionStack = new Stack<ViewportLayout.SelectionChangedEventArgs>();
+        private Stack<Environment.SelectionChangedEventArgs> SelectionStack = new Stack<Environment.SelectionChangedEventArgs>();
 
-        [Reactive] public ViewportLayout.SelectionChangedEventArgs CurrentSelection { get; set;}
-        public void PushSelection(ViewportLayout.SelectionChangedEventArgs selectionChangedEventArgs)
+        [Reactive] public Environment.SelectionChangedEventArgs CurrentSelection { get; set;}
+        public void PushSelection(Environment.SelectionChangedEventArgs selectionChangedEventArgs)
         {
             if(CurrentSelection!=null)
                 SelectionStack.Push(CurrentSelection);
@@ -147,7 +148,7 @@ namespace Assembly3DDemo
             var selectableItem = s.AddedItems[0];
 
             // Check if it is face selectable and process accordingly
-            var subSelectableItem = selectableItem as ViewportLayout.SelectedSubItem;
+            var subSelectableItem = selectableItem as Environment.SelectedSubItem;
             if (subSelectableItem != null)
             {
                 var faceSelectable = (selectableItem.Item as IFaceSelectable);

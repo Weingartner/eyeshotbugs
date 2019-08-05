@@ -45,8 +45,8 @@ namespace Assembly3DDemo
             {
 
                 var mesh = isSphere
-                               ? Solid3D.CreateSphere(8)
-                               : Solid3D.CreateBox(8, 8, 8);
+                               ? Solid.CreateSphere(8,20,20)
+                               : Solid.CreateBox(8, 8, 8);
                 mesh.SetColor(Color.Green);
                 mesh.Translate(20, 0, 0);
                 mesh.Rotate(Math.PI * 2 / d * i, Vector3D.AxisZ);

@@ -20,9 +20,9 @@ namespace EyeshotBugs.Utils
         private static Lazy<EyeshotWindow> _ViewLazy = new Lazy<EyeshotWindow>(CreateEyeshotWindow);
         public static EyeshotWindow ViewportLayout => _ViewLazy.Value;
         
-        public static ViewportLayout CreateViewportLayout()
+        public static Model CreateViewportLayout()
         {
-            var vpl = new ViewportLayout();
+            var vpl = new Model();
             Unlock(vpl);
 
             vpl.Viewports.Add(CreateViewport());
@@ -50,10 +50,13 @@ namespace EyeshotBugs.Utils
             vpl.Light1.Direction = lightVector1;
             vpl.Light1.Active = true;
             vpl.Light1.Color = Color.White;
+
+
+
             return vpl;
         }
 
-        public static void Unlock(ViewportLayout vpl)
+        public static void Unlock(Model vpl)
         {
             var licenseFile = @".\eyeshotlicense.txt";
             if (!File.Exists(licenseFile))
@@ -96,18 +99,18 @@ namespace EyeshotBugs.Utils
 
         public class EyeshotWindow : Window
         {
-            private readonly TaskCompletionSource<ViewportLayout> _Tcs;
-            public ViewportLayout ViewportLayout { get; }
+            private readonly TaskCompletionSource<Model> _Tcs;
+            public Model Model { get; }
 
-            public EyeshotWindow(ViewportLayout viewportLayout)
+            public EyeshotWindow(Model model)
             {
-                ViewportLayout = viewportLayout;
-                _Tcs = new TaskCompletionSource<ViewportLayout>();
+                Model = model;
+                _Tcs = new TaskCompletionSource<Model>();
                 Closing += (sender, args) =>
                 {
-                    _Tcs.SetResult(viewportLayout);
+                    _Tcs.SetResult(model);
                     Hide();
-                    ViewportLayout.Entities.Clear();
+                    Model.Entities.Clear();
                     args.Cancel = true;
                 };
             }
@@ -173,7 +176,7 @@ namespace EyeshotBugs.Utils
                 {
                     if (!vl.IsVisible)
                         vl.Show();
-                    vl.ViewportLayout.Entities.Add(e);
+                    vl.Model.Entities.Add(e);
                 });
         }
 
