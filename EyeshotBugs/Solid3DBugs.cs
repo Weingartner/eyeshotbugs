@@ -137,6 +137,48 @@ namespace EyeshotBugs
 
         }
 
+        [WpfFact]
+        public async Task SnapAndClipCombinedShouldWork()
+        {
+            var solid0 = Solid.CreateCylinder(1, 5, 50);
+            var solid1 = Solid.CreateSphere(1, 50, 50);
+
+            solid0.SetColor(Color.Blue);
+            solid1.SetColor(Color.Green);
+
+            var closed = false;
+            Eyeshot.ViewportLayout.ClosedTask.ContinueWith(_ => closed = true);
+
+            var model = Eyeshot.ViewportLayout.Model;
+            model.Backface.ColorMethod = backfaceColorMethodType.EntityColor;
+
+            while (!closed)
+            {
+                solid1.AddTo(Eyeshot.ViewportLayout);
+                model.ZoomFit();
+
+                model.ClippingPlane1.Cancel();
+                model.ClippingPlane1.Active = true;
+                model.ClippingPlane1.Plane = Plane.YZ;
+                model.ClippingPlane1.Capping = true;
+                model.ClippingPlane1.CappingColor = Color.FromArgb(100, Color.Green);
+                model.ClippingPlane1.ShowPlane = true;
+                model.Invalidate();
+
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                solid0.AddTo(Eyeshot.ViewportLayout);
+                model.Invalidate();
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                model.Entities.Remove(solid0);
+                model.Entities.Remove(solid1);
+                model.Invalidate();
+
+                await Task.Delay(TimeSpan.FromSeconds(2));
+            }
+
+        }
 
     }
 }

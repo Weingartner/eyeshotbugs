@@ -12,6 +12,8 @@ using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
+using Environment = devDept.Eyeshot.Environment;
+using Point = System.Drawing.Point;
 
 namespace EyeshotBugs.Utils
 {
@@ -19,7 +21,7 @@ namespace EyeshotBugs.Utils
     {
         private static Lazy<EyeshotWindow> _ViewLazy = new Lazy<EyeshotWindow>(CreateEyeshotWindow);
         public static EyeshotWindow ViewportLayout => _ViewLazy.Value;
-        
+
         public static Model CreateViewportLayout()
         {
             var vpl = new Model();
@@ -56,6 +58,7 @@ namespace EyeshotBugs.Utils
             return vpl;
         }
 
+
         public static void Unlock(Model vpl)
         {
             var licenseFile = @".\eyeshotlicense.txt";
@@ -63,30 +66,31 @@ namespace EyeshotBugs.Utils
             {
                 var newkey = PromptDialog
                     .Prompt
-                    ("Please enter eyeshot key (first time only)", "Enter License", "", PromptDialog.InputType.Text);
+                    ("Please enter eyeshot key (first time only)", "Enter License", "",
+                        PromptDialog.InputType.Text);
 
-                File.WriteAllText(licenseFile,newkey);
+                File.WriteAllText(licenseFile, newkey);
 
                 MessageBox.Show($@"Key '{newkey}' stored at '{Path.GetFullPath(licenseFile)}'");
             }
 
             var key = File.ReadAllText(licenseFile);
-            
+
             vpl.Unlock(key.Trim());
         }
 
 
-        public static Point3D ToEyeshot(this Vector3D v)=>new Point3D(v.X, v.Y, v.Z);
+        public static Point3D ToEyeshot(this Vector3D v) => new Point3D(v.X, v.Y, v.Z);
 
         private static Viewport CreateViewport()
         {
             var vp = new Viewport
             {
-                CoordinateSystemIcon = new CoordinateSystemIcon (),
+                CoordinateSystemIcon = new CoordinateSystemIcon(),
                 OriginSymbol = new OriginSymbol(),
-                ViewCubeIcon = new ViewCubeIcon ()
+                ViewCubeIcon = new ViewCubeIcon()
             };
-            vp.Grids.Add(new Grid { Step = 10, AutoSize = true });
+            vp.Grids.Add(new Grid {Step = 10, AutoSize = true});
             var toolbar = new ToolBar {Position = ToolBar.positionType.HorizontalTopCenter};
             toolbar.Buttons.Add(new ZoomWindowToolBarButton());
             toolbar.Buttons.Add(new ZoomToolBarButton());
@@ -97,10 +101,12 @@ namespace EyeshotBugs.Utils
             return vp;
         }
 
+
         public class EyeshotWindow : Window
         {
             private readonly TaskCompletionSource<Model> _Tcs;
             public Model Model { get; }
+            public bool SnappingEnabled { get; set; }
 
             public EyeshotWindow(Model model)
             {
@@ -118,50 +124,49 @@ namespace EyeshotBugs.Utils
             public Task ClosedTask => _Tcs.Task;
         }
 
-        public static EyeshotWindow CreateEyeshotWindow()
-        {
-            var viewportLayout = CreateViewportLayout();
-            var window = new EyeshotWindow(viewportLayout);
-            window.Content = viewportLayout;
-            window.Show();
-            return window;
-        }
 
-        public static Task RunSTADesktop(Action action)
-        {
-            return RunSTADesktop
+            public static EyeshotWindow CreateEyeshotWindow()
+            {
+                var viewportLayout = CreateViewportLayout();
+                var window = new EyeshotWindow(viewportLayout);
+                window.Content = viewportLayout;
+                window.Show();
+                return window;
+            }
+
+            public static Task RunSTADesktop(Action action)
+            {
+                return RunSTADesktop
                 (() =>
                 {
                     action();
                     return Task.FromResult(Unit.Default);
                 });
+            }
+
+            public static async Task RunSTADesktop(Func<Task> action)
+            {
+                var tcs = new TaskCompletionSource<Unit>();
+                var thread = new Thread(() =>
+                {
+                    // Set up the SynchronizationContext so that any awaits
+                    // resume on the STA thread as they would in a GUI app.
+                    SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext());
+                    tcs.SetResult(Unit.Default);
+                    Dispatcher.Run();
+                });
+                thread.Name = "Eyeshot.STA";
+
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                await tcs.Task;
+                var invoke = Dispatcher.FromThread(thread)?.Invoke(async () => { await action(); });
+                if (invoke != null)
+                    await invoke;
+            }
         }
 
-        public static async Task RunSTADesktop(Func<Task> action)
-        {
-            var tcs = new TaskCompletionSource<Unit>();
-            var thread = new Thread(() =>
-            {
-                // Set up the SynchronizationContext so that any awaits
-                // resume on the STA thread as they would in a GUI app.
-                SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext());
-                tcs.SetResult(Unit.Default);
-                Dispatcher.Run();
-            });
-            thread.Name = "Eyeshot.STA";
-
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            await tcs.Task;
-            var invoke = Dispatcher.FromThread(thread)?.Invoke(async () =>
-            {
-                await action();
-            });
-            if (invoke != null)
-                await invoke;
-        }
-    }
-    public static class EyeshotExtensions
+        public static class EyeshotExtensions
     {
         public static void AddTo(this IEnumerable<Entity> e, Eyeshot.EyeshotWindow vl)
         {
@@ -179,7 +184,5 @@ namespace EyeshotBugs.Utils
                     vl.Model.Entities.Add(e);
                 });
         }
-
-
     }
 }
