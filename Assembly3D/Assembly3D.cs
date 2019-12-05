@@ -14,6 +14,7 @@ using System.Windows.Input;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
+using DynamicData.Binding;
 using LanguageExt;
 using ReactiveUI;
 using ReactiveUI.Legacy;
@@ -61,8 +62,8 @@ namespace Weingartner.EyeShot.Assembly3D
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public class Assembly3D : ReactiveObject
     {
-        private ReactiveList<Assembly3D> SubAssemblies { get; }
-        private ReactiveList<Label> Labels { get; }
+        private ObservableCollectionExtended<Assembly3D> SubAssemblies { get; }
+        private ObservableCollectionExtended<Label> Labels { get; }
 
         public bool HasChildAssemblies => SubAssemblies.Count > 0;
 
@@ -506,8 +507,8 @@ namespace Weingartner.EyeShot.Assembly3D
                 action();
             };
             Transformation = new Identity();
-            SubAssemblies = new ReactiveList<Assembly3D>();
-            Labels = new ReactiveList<Label>();
+            SubAssemblies = new ObservableCollectionExtended<Assembly3D>();
+            Labels = new ObservableCollectionExtended<Label>();
             var block = new NamedBlock();
             BlockReference = BlockReferenceEx( block );
             Block = block;
@@ -524,15 +525,6 @@ namespace Weingartner.EyeShot.Assembly3D
                         Invalidate( AssemblyViewport );
                     }
                 } );
-
-            Labels
-                .ItemsAdded
-                .StartWith(Labels)
-                .Subscribe(LabelAdded);
-
-            Labels
-                .ItemsRemoved
-                .Subscribe(a => LabelRemoved(a));
 
              ChangedObservable
                 .Subscribe(e =>

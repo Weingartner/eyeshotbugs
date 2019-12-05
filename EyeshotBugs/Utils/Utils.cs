@@ -12,8 +12,6 @@ using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
-using Environment = devDept.Eyeshot.Environment;
-using Point = System.Drawing.Point;
 
 namespace EyeshotBugs.Utils
 {
@@ -38,9 +36,9 @@ namespace EyeshotBugs.Utils
             vpl.Rendered.ShowEdges = true;
             vpl.Rendered.RealisticShadowQuality = realisticShadowQualityType.High;
             vpl.AmbientLight = Color.White;
-            vpl.GetGrid().Step = 1;
-            vpl.GetGrid().MajorLinesEvery = 10;
-            vpl.GetGrid().AutoStep = false;
+            vpl.ActiveViewport.Grid.Step = 1;
+            vpl.ActiveViewport.Grid.MajorLinesEvery = 10;
+            vpl.ActiveViewport.Grid.AutoStep = false;
             vpl.Backface.ColorMethod = backfaceColorMethodType.EntityColor;
 
             var lightVector1 = Vector3D.AxisY;
@@ -87,7 +85,6 @@ namespace EyeshotBugs.Utils
             var vp = new Viewport
             {
                 CoordinateSystemIcon = new CoordinateSystemIcon(),
-                OriginSymbol = new OriginSymbol(),
                 ViewCubeIcon = new ViewCubeIcon()
             };
             vp.Grids.Add(new Grid {Step = 10, AutoSize = true});

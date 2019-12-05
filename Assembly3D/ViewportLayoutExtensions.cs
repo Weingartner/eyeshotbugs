@@ -92,12 +92,6 @@ namespace Weingartner.Eyeshot.Assembly3D
             return Disposable.Create(() => vpl.Entities.Remove(entity));
         }
 
-        public static IDisposable SetCurrent(this Model vpl, BlockReference blkRef)
-        {
-            vpl.Entities.SetCurrent(blkRef);
-            return Disposable.Create( () => vpl.Entities.SetCurrent(null));
-        }
-
         public static IObservable<Environment.SelectionChangedEventArgs> SelectionChangedObservable(this Model viewport)
         {
             return Observable.FromEventPattern<Environment.SelectionChangedEventHandler, Environment.SelectionChangedEventArgs>

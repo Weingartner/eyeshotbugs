@@ -70,7 +70,13 @@ namespace Assembly3DDemo
             Start = ReactiveCommand.Create(()=>_AnimationControl.Disposable = Animate());
             Stop = ReactiveCommand.Create(()=>_AnimationControl.Disposable = Disposable.Empty);
             ClearSelections = CreateEyeshotCommand
-                (() => ActiveRing.Block.Entities.ForEach(e => e.SetSelection(false, ActiveRing.BlockReferenceStack)));
+                (() =>
+            {
+                foreach (var blockEntity in ActiveRing.Block.Entities)
+                {
+                    blockEntity.SetSelection(false, ActiveRing.BlockReferenceStack);
+                }
+            });
 
 
             Ring0 = new Ring();
@@ -131,8 +137,11 @@ namespace Assembly3DDemo
         private void PopSelection()
         {
             // Clear all the current selections
-            ActiveRing.Block.Entities.ForEach(e=>e.ClearSelectionForAllInstances());
-            ActiveRing.Block.Entities.ForEach(e=>(e as IFaceSelectable)?.ClearFacesSelectionForAllInstances());
+            foreach (var blockEntity in ActiveRing.Block.Entities)
+            {
+                blockEntity.ClearSelectionForAllInstances();
+                (blockEntity as IFaceSelectable)?.ClearFacesSelectionForAllInstances();
+            }
 
             if (SelectionStack.Count == 0)
                 return;

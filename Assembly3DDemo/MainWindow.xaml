@@ -35,9 +35,6 @@
         <ddes:Model DockPanel.Dock="Top" x:Name="ViewportLayout" >
             <ddes:Model.Viewports>
                 <ddes:Viewport>
-                    <ddes:Viewport.OriginSymbol>
-                        <ddes:OriginSymbol Lighting="False"/>
-                    </ddes:Viewport.OriginSymbol>
                     <ddes:Viewport.CoordinateSystemIcon>
                         <ddes:CoordinateSystemIcon Lighting="False"/>
                     </ddes:Viewport.CoordinateSystemIcon>
