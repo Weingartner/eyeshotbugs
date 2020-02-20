@@ -34,7 +34,7 @@ namespace EyeshotBugs
                     mesh.ColorMethod = colorMethodType.byEntity;
 
                     block.Entities.Add(mesh  );
-                    block.RegenAllCurved( new RegenParams( 0.1, vpl ) );
+                    block.Entities.Regen();
 
 
                     await Eyeshot.ViewportLayout.ClosedTask;

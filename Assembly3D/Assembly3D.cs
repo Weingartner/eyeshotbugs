@@ -730,7 +730,7 @@ namespace Weingartner.EyeShot.Assembly3D
             if (AssemblyViewport.renderContext!=null)
             {
                 var p = new RegenParams(CurrentOrParentRegenTolerance, AssemblyViewport);
-                Block.RegenAllCurved(p);
+                Block.Entities.Regen();
                 AssemblyViewport.Entities.Regen();
                 //AssemblyViewport.Invalidate();
             }
