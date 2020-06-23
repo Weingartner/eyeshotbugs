@@ -68,7 +68,7 @@ namespace Weingartner.Eyeshot.Assembly3D
                 base.Draw(data);
             }
 
-            protected override void Draw<T>(T myParams, ViewportLayout.drawCallback<T> drawCall)
+            protected override void Draw<T>(T myParams, Model.drawCallback<T> drawCall)
             {
                 base.Draw(myParams, drawCall);
             }

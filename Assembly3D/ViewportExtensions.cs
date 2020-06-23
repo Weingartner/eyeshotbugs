@@ -13,7 +13,7 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// </summary>
         /// <param name="viewport"></param>
         /// <returns></returns>
-        public static IObservable<Unit> Ready(this ViewportLayout viewport)
+        public static IObservable<Unit> Ready(this Model viewport)
         {
             return Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>
                 (h => viewport.Loaded += h

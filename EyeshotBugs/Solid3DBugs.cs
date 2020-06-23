@@ -107,30 +107,30 @@ namespace EyeshotBugs
             stockSolid.SetColor(Color.Red);
 
             var closed = false;
-            Eyeshot.ViewportLayout.ClosedTask.ContinueWith(_ => closed = true);
+            Eyeshot.EyeshotTestWindow.ClosedTask.ContinueWith(_ => closed = true);
 
-            Eyeshot.ViewportLayout.Model.Backface.ColorMethod = backfaceColorMethodType.Cull;
+            Eyeshot.EyeshotTestWindow.Model.Backface.ColorMethod = backfaceColorMethodType.Cull;
 
 
             while (!closed)
 
             {
-                tbSolid.AddTo(Eyeshot.ViewportLayout);
-                stockSolid.AddTo(Eyeshot.ViewportLayout);
-                Eyeshot.ViewportLayout.Model.ZoomFit();
+                tbSolid.AddTo(Eyeshot.EyeshotTestWindow);
+                stockSolid.AddTo(Eyeshot.EyeshotTestWindow);
+                Eyeshot.EyeshotTestWindow.Model.ZoomFit();
 
-                Eyeshot.ViewportLayout.Model.Invalidate();
+                Eyeshot.EyeshotTestWindow.Model.Invalidate();
 
                 await Task.Delay(TimeSpan.FromSeconds(0.5));
 
                 var intersection = Solid.Intersection(stockSolid, tbSolid);
 
-                Eyeshot.ViewportLayout.Model.Entities.Remove(tbSolid);
-                Eyeshot.ViewportLayout.Model.Entities.Remove(stockSolid);
+                Eyeshot.EyeshotTestWindow.Model.Entities.Remove(tbSolid);
+                Eyeshot.EyeshotTestWindow.Model.Entities.Remove(stockSolid);
 
-                intersection.AddTo(Eyeshot.ViewportLayout);
+                intersection.AddTo(Eyeshot.EyeshotTestWindow);
 
-                Eyeshot.ViewportLayout.Model.Invalidate();
+                Eyeshot.EyeshotTestWindow.Model.Invalidate();
 
                 await Task.Delay(TimeSpan.FromSeconds(0.5));
             }
@@ -147,14 +147,14 @@ namespace EyeshotBugs
             solid1.SetColor(Color.Green);
 
             var closed = false;
-            Eyeshot.ViewportLayout.ClosedTask.ContinueWith(_ => closed = true);
+            Eyeshot.EyeshotTestWindow.ClosedTask.ContinueWith(_ => closed = true);
 
-            var model = Eyeshot.ViewportLayout.Model;
+            var model = Eyeshot.EyeshotTestWindow.Model;
             model.Backface.ColorMethod = backfaceColorMethodType.EntityColor;
 
             while (!closed)
             {
-                solid1.AddTo(Eyeshot.ViewportLayout);
+                solid1.AddTo(Eyeshot.EyeshotTestWindow);
                 model.ZoomFit();
 
                 model.ClippingPlane1.Cancel();
@@ -167,7 +167,7 @@ namespace EyeshotBugs
 
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                solid0.AddTo(Eyeshot.ViewportLayout);
+                solid0.AddTo(Eyeshot.EyeshotTestWindow);
                 model.Invalidate();
                 await Task.Delay(TimeSpan.FromSeconds(2));
 

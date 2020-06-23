@@ -18,7 +18,7 @@ namespace EyeshotBugs.Utils
     public static class Eyeshot
     {
         private static Lazy<EyeshotWindow> _ViewLazy = new Lazy<EyeshotWindow>(CreateEyeshotWindow);
-        public static EyeshotWindow ViewportLayout => _ViewLazy.Value;
+        public static EyeshotWindow EyeshotTestWindow => _ViewLazy.Value;
 
         public static Model CreateViewportLayout()
         {

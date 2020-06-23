@@ -19,7 +19,7 @@ namespace EyeshotBugs
             await Eyeshot.RunSTADesktop
                 ( async () =>
                 {
-                    var vpl = Eyeshot.ViewportLayout.Model;
+                    var vpl = Eyeshot.EyeshotTestWindow.Model;
 
                     var block = new Block("Foo");
                     var blockRef = new BlockReference( new Identity(), "Foo" );
@@ -41,7 +41,7 @@ namespace EyeshotBugs
                     blockRef.RegenMode = regenType.NotNeeded;
 
                     //vpl.Entities.Regen(  );
-                    await Eyeshot.ViewportLayout.ClosedTask;
+                    await Eyeshot.EyeshotTestWindow.ClosedTask;
 
                 } );
         }
@@ -52,7 +52,7 @@ namespace EyeshotBugs
             await Eyeshot.RunSTADesktop
                 ( async () =>
                 {
-                    var vpl = Eyeshot.ViewportLayout.Model;
+                    var vpl = Eyeshot.EyeshotTestWindow.Model;
 
                     var block = new Block("Foo");
                     var blockRef = new BlockReference( new Identity(), "Foo" );
@@ -85,7 +85,7 @@ namespace EyeshotBugs
                             });
 
                     //vpl.Entities.Regen(  );
-                    await Eyeshot.ViewportLayout.ClosedTask;
+                    await Eyeshot.EyeshotTestWindow.ClosedTask;
 
                 } );
         }

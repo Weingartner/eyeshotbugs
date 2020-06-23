@@ -609,11 +609,11 @@ namespace EyeshotBugs
                         nurb.Color = Color.Yellow;
                         nurb.ColorMethod = colorMethodType.byEntity;
                         nurb.LineWeight = 5;
-                        nurb.AddTo(Eyeshot.ViewportLayout);
+                        nurb.AddTo(Eyeshot.EyeshotTestWindow);
                     }
-                    eyeshotSurface.AddTo(Eyeshot.ViewportLayout);
-                    Eyeshot.ViewportLayout.Model.ZoomFit();
-                    await Eyeshot.ViewportLayout.ClosedTask;
+                    eyeshotSurface.AddTo(Eyeshot.EyeshotTestWindow);
+                    Eyeshot.EyeshotTestWindow.Model.ZoomFit();
+                    await Eyeshot.EyeshotTestWindow.ClosedTask;
                 }));
 
 
@@ -646,7 +646,7 @@ namespace EyeshotBugs
 
                         var trimmedExtrusion = extrusion.SelectMany(q => Surface.DropLoops(q, new[] { trim })).ToArray();
 
-                        trim.AddTo(Eyeshot.ViewportLayout);
+                        trim.AddTo(Eyeshot.EyeshotTestWindow);
 
                         foreach (var surface in extrusion)
                         {
@@ -659,7 +659,7 @@ namespace EyeshotBugs
                             surface.Color = Color.Green;
                             surface.ColorMethod = colorMethodType.byEntity;
                             surface.ShowControl = true;
-                            surface.AddTo(Eyeshot.ViewportLayout);
+                            surface.AddTo(Eyeshot.EyeshotTestWindow);
                         }
                         foreach (var surface in trimmedExtrusion)
                         {
@@ -667,11 +667,11 @@ namespace EyeshotBugs
                             surface.Color = Color.Red;
                             surface.ColorMethod = colorMethodType.byEntity;
                             surface.ShowControl = true;
-                            surface.AddTo(Eyeshot.ViewportLayout);
+                            surface.AddTo(Eyeshot.EyeshotTestWindow);
                         }
 
-                        Eyeshot.ViewportLayout.Model.ZoomFit();
-                        await Eyeshot.ViewportLayout.ClosedTask;
+                        Eyeshot.EyeshotTestWindow.Model.ZoomFit();
+                        await Eyeshot.EyeshotTestWindow.ClosedTask;
 
                     }));
 

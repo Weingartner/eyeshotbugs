@@ -376,10 +376,10 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public class ViewPortEvent<TT>
         {
-            public ViewportLayout Layout { get; }
+            public Model Layout { get; }
             public TT T { get; }
 
-            public ViewPortEvent(ViewportLayout layout, TT t)
+            public ViewPortEvent(Model layout, TT t)
             {
                 Layout = layout;
                 T = t;
@@ -749,8 +749,8 @@ namespace Weingartner.EyeShot.Assembly3D
         /// <param name="postAddAction"></param>
         /// <returns></returns>
         public static IDisposable BindAssemblyToViewport
-            ( ViewportLayout                               assemblyViewportLayoutAdapter
-            , Expression<Func<ViewportLayout, Assembly3D>> selector
+            ( Model                               assemblyViewportLayoutAdapter
+            , Expression<Func<Model, Assembly3D>> selector
             , Action                                         postAddAction )
         {
             return assemblyViewportLayoutAdapter

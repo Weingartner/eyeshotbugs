@@ -22,7 +22,7 @@ namespace EyeshotBugs
             await Eyeshot.RunSTADesktop
             (async () =>
             {
-                var vpl = Eyeshot.ViewportLayout.Model;
+                var vpl = Eyeshot.EyeshotTestWindow.Model;
 
                 var block = new Block("Test");
                 var blockRef = new BlockReference(new Identity(), "Test");
@@ -54,7 +54,7 @@ namespace EyeshotBugs
                         vpl.Invalidate();
                     });
 
-                await Eyeshot.ViewportLayout.ClosedTask;
+                await Eyeshot.EyeshotTestWindow.ClosedTask;
             });
         }
     }
