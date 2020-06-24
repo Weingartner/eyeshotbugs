@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Assembly3DDemo.Properties {
+namespace RingsDemo.Properties {
     using System;
     
     

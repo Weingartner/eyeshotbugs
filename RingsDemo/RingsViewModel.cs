@@ -12,7 +12,7 @@ using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.EyeShot.Assembly3D;
 using Environment = devDept.Eyeshot.Environment;
 
-namespace Assembly3DDemo
+namespace RingsDemo
 {
     public class RingsViewModel : Assembly3D
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3DDemo", "Assembly3DDemo\Assembly3DDemo.csproj", "{FE7F611D-74B2-4776-973D-F2D229466CC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingsDemo", "RingsDemo\RingsDemo.csproj", "{FE7F611D-74B2-4776-973D-F2D229466CC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3D", "Assembly3D\Assembly3D.csproj", "{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}"
 EndProject

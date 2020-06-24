@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Assembly3DDemo
+namespace RingsDemo
 {
     /// <summary>
     /// Interaction logic for App.xaml

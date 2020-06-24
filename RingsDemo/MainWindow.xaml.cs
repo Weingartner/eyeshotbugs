@@ -9,7 +9,7 @@ using devDept.Eyeshot.Entities;
 using ReactiveUI;
 using Weingartner.Eyeshot.Assembly3D;
 
-namespace Assembly3DDemo
+namespace RingsDemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

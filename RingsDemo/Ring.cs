@@ -9,7 +9,7 @@ using Weingartner.EyeShot;
 using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.EyeShot.Assembly3D;
 
-namespace Assembly3DDemo
+namespace RingsDemo
 {
     public class Ring : Assembly3D
     {
