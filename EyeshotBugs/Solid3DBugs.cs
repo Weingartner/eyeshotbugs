@@ -3,12 +3,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
 using EyeshotBugs.Utils;
-using Weingartner.Eyeshot.Assembly3D;
+using Weingartner.EyeShot;
 using Xunit;
 
 namespace EyeshotBugs

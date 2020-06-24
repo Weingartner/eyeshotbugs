@@ -9,17 +9,14 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using DynamicData.Binding;
 using LanguageExt;
 using ReactiveUI;
-using ReactiveUI.Legacy;
+using ReactiveUI.Fody.Helpers;
 using Weingartner.Eyeshot.Assembly3D;
-using Weingartner.Eyeshot.Assembly3D.Weingartner.EyeShot;
 using Weingartner.EyeShot.Assembly3D.Weingartner.Utils;
 using Debugger = System.Diagnostics.Debugger;
 using Label = devDept.Eyeshot.Labels.Label;
@@ -29,13 +26,13 @@ using Unit = System.Reactive.Unit;
 namespace Weingartner.EyeShot.Assembly3D
 {
 
-    public interface IRequiresRedraw: IDisposable
+    public interface IRequiresRedraw : IDisposable
     {
         IObservable<Unit> RedrawRequiredObservable { get; }
     }
 
     /// <summary>
-    /// This class represents an hierarchical assembly of objects in a cleaner way
+    /// This class represents an hierarchical assembly of 3D objects in a cleaner way
     /// than EyeShot naturally allows. You don't have to manually create block
     /// references and add them to the viewport and manually refresh the viewport
     /// if you wish to change the transformations and animate.
@@ -71,22 +68,28 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public IObservable<Assembly3D> ChangedObservable => _Changed;
 
-        private bool _ChangeDelayed = false;
+        private int _ChangeDelayed;
         public IDisposable DelayChange()
         {
-            _ChangeDelayed = true;
+            _ChangeDelayed++;
             return Disposable.Create
-                ( () =>
+                (() =>
                 {
-                    _ChangeDelayed = false;
+                    _ChangeDelayed--;
                     FireChange();
-                } );
+                });
 
         }
 
+        //private bool IsChangeDelayed =>
+        //    _ChangeDelayed > 0 || Parent != null && Parent != this && Parent.IsChangeDelayed;
+
+        private bool IsChangeDelayed =>
+            _ChangeDelayed > 0;
+
         public void FireChange()
         {
-            if(!_ChangeDelayed)
+            if (!IsChangeDelayed && IsCompiled)
                 _Changed.OnNext(this);
         }
 
@@ -120,11 +123,11 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             if (AssemblyViewport != null && IsCompiled)
             {
-                Debug.Assert( AssemblyViewport.Blocks.Contains( (Block)Block ), "Viewport does not contain block reference"  );
-                Debug.Assert( AssemblyViewport.Blocks.Contains( Block.Name ), "Viewport does not contain block reference"  );
+                Debug.Assert(AssemblyViewport.Blocks.Contains(Block), "Viewport does not contain block reference");
+                Debug.Assert(AssemblyViewport.Blocks.Contains(Block.Name), "Viewport does not contain block reference");
                 foreach (var ent in Block.Entities.OfType<BlockReference>())
                 {
-                    Debug.Assert( AssemblyViewport.Blocks.Contains( ent.BlockName ), "Viewport does not contain block reference"  );
+                    Debug.Assert(AssemblyViewport.Blocks.Contains(ent.BlockName), "Viewport does not contain block reference");
                 }
                 foreach (var sub in SubAssemblies)
                 {
@@ -148,7 +151,7 @@ namespace Weingartner.EyeShot.Assembly3D
                 return;
             if (Debugger.IsAttached)
                 Debugger.Break();
-            throw new Exception("This code needs to be run on the control thread");
+            throw new Exception( "This code needs to be run on the control thread" );
         }
         public Transformation AccumulatedTransformation => BlockReferenceStack.Aggregate((Transformation)new Identity(), (t, block) => t * block.Transformation);
 
@@ -180,18 +183,21 @@ namespace Weingartner.EyeShot.Assembly3D
 
         private readonly ISubject<int> _MouseExitObservable = new Subject<int>();
 
-        public Assembly3D Clear() {
+        public Assembly3D Clear()
+        {
             AssertCorrectThread();
             using (DelayChange())
             {
                 RemoveAllEntities();
-                foreach (var a in SubAssemblies.ToList())
-                    Remove(a);
+                using (SubAssemblies.SuspendNotifications())
+                {
+                    foreach (var a in SubAssemblies.ToList())
+                        Remove(a);
+                }
 
                 foreach (var label in Labels.ToList())
                     Remove(label);
             }
-            FireChange();
             return this;
         }
 
@@ -207,63 +213,61 @@ namespace Weingartner.EyeShot.Assembly3D
         public Assembly3D Add(Assembly3D a)
         {
             AssertCorrectThread();
-            SubAssemblies.Add(a);
-            a.Parent?.Remove(a);
-            a.Parent = this;
-
-            if (Block.Entities.Contains(a.BlockReference))
-                throw new Exception("Assembly already added");
-
-            if (IsCompiled)
+            using (DelayChangeNotifications())
             {
-                Debug.Assert(!a.IsCompiled);
-                CompileSubAssembly(a);
-            }
-            Add(a.BlockReference);
+                SubAssemblies.Add(a);
+                a.Parent?.Remove(a);
+                a.Parent = this;
 
+                if (Block.Entities.Contains(a.BlockReference))
+                    throw new Exception("Assembly already added");
+
+                if (IsCompiled)
+                {
+                    Debug.Assert(!a.IsCompiled);
+                    CompileSubAssembly(a);
+                }
+                Add(a.BlockReference);
+            }
             FireChange();
             return this;
         }
 
-        public Assembly3D Add( Entity es, Color? color = null )
-        {
-            return Add( new[] {es}, color );
-        }
         /// <summary>
         /// Add a range of entities to the assembly
         /// </summary>
         /// <param name="es"></param>
         /// <param name="color"></param>
-        public Assembly3D Add(IEnumerable<Entity> es, Color? color=null)
+        public Assembly3D Add(IEnumerable<Entity> es, Color? color = null)
         {
-            es = es ?? new Entity[]{};
+            es = es ?? new Entity[] { };
 
             using (DelayChange())
             {
                 var entities = es as IList<Entity> ?? es.ToList();
 
-                if(color!=null)
-                    entities.SetColorAndWeight( color.Value );
+                if (color != null)
+                    entities.SetColor(color.Value);
 
                 if (entities.Any(e => Block.Entities.Contains(e)))
-                    throw new Exception("Entity is allready included");
+                    throw new Exception("Entity is already included");
 
                 foreach (var entity in entities)
-                    Add( entity );
+                    Add(entity);
             }
             return this;
         }
         public Assembly3D Remove(IEnumerable<Entity> es)
         {
             AssertCorrectThread();
-            es = es ?? new Entity[]{};
+            es = es ?? new Entity[] { };
 
             using (DelayChange())
             {
                 var entities = es as IList<Entity> ?? es.ToList();
 
                 foreach (var entity in entities)
-                    Remove( entity );
+                    Remove(entity);
             }
             return this;
         }
@@ -272,11 +276,11 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             AssertCorrectThread();
             if (Block.Entities.Contains(e))
-                throw new ArgumentException("Entity has allready been added once");
-            Block.Entities.Add( e );
+                throw new ArgumentException("Entity has already been added once");
+            Block.Entities.Add(e);
             if (e is IRequiresRedraw irr)
             {
-                _RedrawSubscriptions.Register( e, () => irr.RedrawRequiredObservable.Subscribe( _ => FireChange() ) );
+                _RedrawSubscriptions.Register(e, () => irr.RedrawRequiredObservable.Subscribe(_ => FireChange()));
             }
             FireChange();
         }
@@ -319,11 +323,13 @@ namespace Weingartner.EyeShot.Assembly3D
         public void Remove(Assembly3D a)
         {
             AssertCorrectThread();
-            SubAssemblies.Remove(a);
-            a.Parent = null;
+            using (DelayChangeNotifications())
+            {
+                SubAssemblies.Remove(a);
+                a.Parent = null;
 
-            Remove(a.BlockReference);
-
+                Remove(a.BlockReference);
+            }
             if (IsCompiled)
                 a.Decompile();
 
@@ -339,8 +345,8 @@ namespace Weingartner.EyeShot.Assembly3D
         public void Remove(Entity e)
         {
             AssertCorrectThread();
-            Block.Entities.Remove( e );
-            _RedrawSubscriptions.Dispose( e );
+            Block.Entities.Remove(e);
+            _RedrawSubscriptions.Dispose(e);
             FireChange();
         }
 
@@ -354,62 +360,6 @@ namespace Weingartner.EyeShot.Assembly3D
 
 
         #region Mouse Handling
-
-        /*
-        private void NotifyMouseMove(MouseEventArgs args, IViewportLayoutX layout)
-        {
-            layout.Entities.SetCurrent(BlockReference);
-            try
-            {
-                _MouseMoveSubject.OnNext(new ViewPortEvent<MouseEventArgs>(layout, args));
-                foreach (var subAssembly in SubAssemblies)
-                {
-                    subAssembly.NotifyMouseMove(args, layout);
-                }
-            }
-            finally
-            {
-                layout.Entities.SetParentAsCurrent();
-            }
-        }
-        */
-
-        public class ViewPortEvent<TT>
-        {
-            public Model Layout { get; }
-            public TT T { get; }
-
-            public ViewPortEvent(Model layout, TT t)
-            {
-                Layout = layout;
-                T = t;
-            }
-        }
-
-        private readonly Subject<ViewPortEvent<MouseEventArgs>> _MouseMoveSubject = new Subject<ViewPortEvent<MouseEventArgs>>();
-
-        private IObservable<ViewPortEvent<MouseEventArgs>> MouseMoveObservable => _MouseMoveSubject;
-
-
-        private void ProcessMouseMoveEvents()
-        {
-        /*
-            var i = 0;
-            MouseMoveObservable
-                .Select
-                (e => e.Layout.GetEntityUnderMouseCursor(e.T.Location))
-                .StartWith(-1)
-                .DistinctUntilChanged()
-                .Buffer(2, 1)
-                .Subscribe
-                (jbuff =>
-                {
-                    if (i++ != 0)
-                        MouseExit(jbuff[0]);
-                    MouseEnter(jbuff[1]);
-                });
-        */
-        }
 
         /// <summary>
         /// Triggered when a child entity is entered
@@ -437,20 +387,11 @@ namespace Weingartner.EyeShot.Assembly3D
             }
         }
 
-        protected void MouseEnter(int i)
-        {
-            _MouseEnterObservable.OnNext(i);
-        }
-
-        protected void MouseExit(int i)
-        {
-            _MouseExitObservable.OnNext(i);
-        }
         #endregion
 
         #region constructors
         // ReSharper disable ExplicitCallerInfoArgument
-        public Assembly3D(IEnumerable<Entity> es,[CallerFilePath] string path = "", [CallerLineNumber] int line = 0 ) : this(path, line)
+        public Assembly3D(IEnumerable<Entity> es, [CallerFilePath] string path = "", [CallerLineNumber] int line = 0) : this(path, line)
         // ReSharper restore ExplicitCallerInfoArgument
         {
             Add(es);
@@ -461,45 +402,46 @@ namespace Weingartner.EyeShot.Assembly3D
             return $"{_Name} : {Block.Name}";
         }
 
-        private static bool _InvalidateWaiting;
-        private static readonly System.Collections.Generic.HashSet<Model> _ViewportsToInvalidate = new System.Collections.Generic.HashSet<Model>();
+        //private static bool _InvalidateWaiting;
+        private static readonly System.Collections.Generic.HashSet<Model> ViewportsToInvalidate = new System.Collections.Generic.HashSet<Model>();
 
-        public static async void Invalidate(Model viewport)
+        public static void Invalidate(Model viewport)
         {
-            viewport.Invalidate();
-            return;
-            lock(_ViewportsToInvalidate)
-                _ViewportsToInvalidate.Add( viewport );
-
-            if (_InvalidateWaiting)
+            if (viewport == null)
                 return;
 
-            _InvalidateWaiting = true;
-            await Task.Delay( TimeSpan.FromSeconds( 1 / 60.0 ) );
+            lock (ViewportsToInvalidate)
+                ViewportsToInvalidate.Add(viewport);
+            viewport.Invalidate();
 
-            lock (_ViewportsToInvalidate)
-            {
-                foreach (var cpl in _ViewportsToInvalidate)
-                {
-                    cpl.Entities.Regen( new RegenOptions(){Async = false} );
-                    cpl.Invalidate();
-                }
-                
-            }
+            //if (_InvalidateWaiting)
+            //    return;
 
-            _InvalidateWaiting = false;
+            //_InvalidateWaiting = true;
+            //await Task.Delay( TimeSpan.FromSeconds( 1 / 60.0 ) );
+
+            //lock (ViewportsToInvalidate)
+            //{
+            //    foreach (var cpl in ViewportsToInvalidate)
+            //    {
+            //        cpl.Invalidate();
+            //    }
+
+            //}
+
+            //_InvalidateWaiting = false;
 
         }
 
-        public static BlockReferenceEx BlockReferenceEx( NamedBlock block )
+        public static BlockReference BlockReferenceEx(NamedBlock block)
         {
-            return new BlockReferenceEx(new Identity(), block.Name);
+            return new BlockReference(new Identity(), block.Name);
         }
 
         /// <summary>
         /// Create an assembly with no children yet
         /// </summary>
-        public Assembly3D([CallerFilePath] string path = "", [CallerLineNumber] int line = 0 ) 
+        public Assembly3D([CallerFilePath] string path = "", [CallerLineNumber] int line = 0)
         {
             _Name = $"{path}:{line}";
 
@@ -510,7 +452,7 @@ namespace Weingartner.EyeShot.Assembly3D
             SubAssemblies = new ObservableCollectionExtended<Assembly3D>();
             Labels = new ObservableCollectionExtended<Label>();
             var block = new NamedBlock();
-            BlockReference = BlockReferenceEx( block );
+            BlockReference = BlockReferenceEx(block);
             Block = block;
 
 
@@ -519,31 +461,26 @@ namespace Weingartner.EyeShot.Assembly3D
                 .Subscribe(v =>
                 {
                     BlockReference.Transformation = v;
-
-                    if (IsCompiled )
-                    {
-                        Invalidate( AssemblyViewport );
-                    }
-                } );
-
-             ChangedObservable
-                .Subscribe(e =>
-                {
-                    if (IsCompiled)
-                    {
-                        Regen( );
-                        Invalidate( AssemblyViewport );
-                    }
+                    BlockReference.RegenMode = regenType.NotNeeded;
+                    Invalidate(AssemblyViewport);
                 });
 
-
-            ProcessMouseMoveEvents();
+            ChangedObservable
+               .ObserveOn(this)
+               .Subscribe(e =>
+               {
+                   if (IsCompiled)
+                   {
+                       Regen();
+                       Invalidate(AssemblyViewport);
+                   }
+               });
         }
 
 
         #endregion
 
-        public BlockReferenceEx BlockReference { get; }
+        public BlockReference BlockReference { get; }
 
 
         #region compilers
@@ -553,13 +490,13 @@ namespace Weingartner.EyeShot.Assembly3D
         /// </summary>
         /// <returns></returns>
         public void Compile
-            ( Action<Action, bool> invoker
+            (Action<Action, bool> invoker
             , Model assemblyViewport
             , bool addToViewportLayout = false)
         {
             if (IsCompiled)
             {
-                if(assemblyViewport!=AssemblyViewport)
+                if (assemblyViewport != null && !Equals(assemblyViewport, AssemblyViewport))
                     throw new Exception("Trying to assign assembly to multiple viewports is not allowed");
                 Validate();
                 return;
@@ -567,9 +504,9 @@ namespace Weingartner.EyeShot.Assembly3D
 
             IEnumerable<IDisposable> Compile()
             {
-                yield return AssemblyViewport.AddBlock(BlockReference.BlockName, Block);
+                yield return AssemblyViewport.AddBlock(BlockReference.BlockName,Block);
 
-                yield return Disposable.Create( DecompileAllSubAssemblies );
+                yield return Disposable.Create(DecompileAllSubAssemblies);
                 CompileAllSubAssemblies();
 
                 yield return Disposable.Create(DecompileAllLabels);
@@ -577,8 +514,8 @@ namespace Weingartner.EyeShot.Assembly3D
 
                 if (addToViewportLayout)
                 {
-                    AssemblyViewport.Entities.Add(BlockReference  );
-                    yield return Disposable.Create( () => AssemblyViewport.Entities.Remove( BlockReference ) );
+                    AssemblyViewport.Entities.Add(BlockReference);
+                    yield return Disposable.Create(() => AssemblyViewport.Entities.Remove(BlockReference));
                 }
 
                 yield return OnCompiled(AssemblyViewport);
@@ -595,7 +532,7 @@ namespace Weingartner.EyeShot.Assembly3D
             }
 
             Validate();
-            Regen();
+            FireChange();
         }
 
         protected virtual IDisposable OnCompiled(Model assemblyViewport)
@@ -661,11 +598,9 @@ namespace Weingartner.EyeShot.Assembly3D
 
         private IDisposable _Subscriptions = Disposable.Empty;
         public Model AssemblyViewport { get; private set; }
-        private string _Name;
+        private readonly string _Name;
 
-
-        private bool _IsCompiled;
-        public  bool IsCompiled { get => _IsCompiled; set => this.RaiseAndSetIfChanged( ref _IsCompiled, value ); }
+        [Reactive] public bool IsCompiled { get; private set; }
 
 
         #region handlers
@@ -692,6 +627,7 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public Assembly3D Parent { get; private set; }
 
+
         #region selection
 
         public NamedBlock Block { get; }
@@ -703,8 +639,8 @@ namespace Weingartner.EyeShot.Assembly3D
         /// </summary>
         public Option<double> RegenTolerance { get; set; } = Option<double>.None;
 
-        public double CurrentOrParentRegenTolerance => 
-            RegenTolerance.IfNone( () => Parent?.CurrentOrParentRegenTolerance ?? DefaultRegenTolerance );
+        public double CurrentOrParentRegenTolerance =>
+            RegenTolerance.IfNone(() => Parent?.CurrentOrParentRegenTolerance ?? DefaultRegenTolerance);
 
 
         /// <summary>
@@ -714,25 +650,26 @@ namespace Weingartner.EyeShot.Assembly3D
         /// </summary>
         public void SetAsSelectionScope()
         {
-            if(!IsCompiled)
+            if (!IsCompiled)
                 throw new Exception("Assembly must be compiled and attached to viewport to call this");
             AssemblyViewport.SetSelectionScope(BlockReferenceStack);
         }
 
 
         #endregion
-
         public void Regen()
         {
             // This check is here because sometimes deep in eyeshot
             // there is a null reference exception and it occurs 
             // when the renderContext is null
-            if (AssemblyViewport.renderContext!=null)
+            if (AssemblyViewport.renderContext != null)
             {
                 var p = new RegenParams(CurrentOrParentRegenTolerance, AssemblyViewport);
-                Block.Entities.Regen();
+                BlockReference.Regen(p);
+                Block.Entities.RegenAllCurved();
                 AssemblyViewport.Entities.Regen();
-                //AssemblyViewport.Invalidate();
+                AssemblyViewport.Invalidate();
+                AssemblyViewport.AdjustNearAndFarPlanes();
             }
         }
 
@@ -742,28 +679,26 @@ namespace Weingartner.EyeShot.Assembly3D
         /// When the property changes it is compiled and it's components are added correctly to the
         /// 3D viewport.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="assemblyViewportLayoutAdapter"></param>
-        /// <param name="host"></param>
         /// <param name="selector">for example <![CDATA[p=>p.Assembly]]> where Assembly is of type Assembly3D</param>
         /// <param name="postAddAction"></param>
         /// <returns></returns>
         public static IDisposable BindAssemblyToViewport
-            ( Model                               assemblyViewportLayoutAdapter
+            (Model assemblyViewportLayoutAdapter
             , Expression<Func<Model, Assembly3D>> selector
-            , Action                                         postAddAction )
+            , Action postAddAction)
         {
             return assemblyViewportLayoutAdapter
                   .Ready()
                   .Select(_ => assemblyViewportLayoutAdapter
                               .WhenAnyValue(selector)
-                              .Where(v=>v!=null  )
-                              .DistinctUntilChanged(p => p?.Block.Name ))
+                              .Where(v => v!=null)
+                              .DistinctUntilChanged(p => p?.Block.Name))
                   .Switch()
                   .SubscribeDisposable
-                       ( asm => asm.BindToViewportLayout
-                                 ( assemblyViewportLayoutAdapter
-                                 , postAddAction ) );
+                       (asm => asm.BindToViewportLayout
+                                (assemblyViewportLayoutAdapter
+                                , postAddAction));
         }
 
         /// <summary>
@@ -772,32 +707,28 @@ namespace Weingartner.EyeShot.Assembly3D
         /// to ensure a redraw.
         /// </summary>
         /// <param name="viewportLayout"></param>
-        /// <param name="assembly3D"></param>
         /// <param name="postAddAction"></param>
-        public IDisposable BindToViewportLayout(Model viewportLayout, Action postAddAction =null)
+        public IDisposable BindToViewportLayout(Model viewportLayout, Action postAddAction = null)
         {
             return viewportLayout.Dispatcher.Invoke
                 (() =>
                 {
-
-                    if (this == null)
-                        return Disposable.Empty;
-
                     Decompile();
                     Compile
-                        ( invoker: (action, regen) =>
-                              viewportLayout.Dispatcher.InvokeAsync
-                                  (() =>
-                                  {
-                                      action();
-                                      if(IsCompiled && regen)
-                                          Regen();
-                                  })
+                        (invoker: (action, regen) =>
+                             viewportLayout.Dispatcher.InvokeAsync
+                                 (() =>
+                                 {
+                                     action();
+                                     if (IsCompiled && regen)
+                                         Regen();
+                                 })
                         , assemblyViewport: viewportLayout
                         , addToViewportLayout: true
                         );
 
                     postAddAction?.Invoke();
+                    viewportLayout.Invalidate();
 
                     return Disposable.Create(Decompile);
                 });
