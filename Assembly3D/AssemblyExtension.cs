@@ -1,7 +1,7 @@
 using System;
 using System.Reactive.Linq;
 
-namespace Weingartner.Eyeshot.Assembly3D
+namespace Weingartner.EyeShot.Assembly3D
 {
     public static class AssemblyExtension
     {
@@ -18,7 +18,7 @@ namespace Weingartner.Eyeshot.Assembly3D
         /// <returns></returns>
         public static IObservable<T> ObserveOn<T>
             (this IObservable<T> @this
-            , EyeShot.Assembly3D.Assembly3D assembly3D
+            , global::Weingartner.EyeShot.Assembly3D.Assembly3D assembly3D
             , bool regen = true)
         {
             return Observable.Create<T>
@@ -31,11 +31,11 @@ namespace Weingartner.Eyeshot.Assembly3D
                 );
         }
 
-        public static IObservable<EyeShot.Assembly3D.Assembly3D> ObserveOnViewport
-            (this IObservable<EyeShot.Assembly3D.Assembly3D> @this
+        public static IObservable<global::Weingartner.EyeShot.Assembly3D.Assembly3D> ObserveOnViewport
+            (this IObservable<global::Weingartner.EyeShot.Assembly3D.Assembly3D> @this
             , bool regen = true)
         {
-            return Observable.Create<EyeShot.Assembly3D.Assembly3D>
+            return Observable.Create<global::Weingartner.EyeShot.Assembly3D.Assembly3D>
                 ( o => @this.Subscribe
                     ( v => v.Invoke(() => o.OnNext(v), regen)
                     , o.OnError

@@ -6,7 +6,7 @@ using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using Environment = devDept.Eyeshot.Environment;
 
-namespace Weingartner.Eyeshot.Assembly3D
+namespace Weingartner.EyeShot.Assembly3D
 {
     public static class ViewportLayoutExtensions
     {

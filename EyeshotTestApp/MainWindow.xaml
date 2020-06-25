@@ -1,0 +1,33 @@
+﻿<reactiveui:ReactiveWindow x:Class="EyeshotTestApp.MainWindow"
+        x:TypeArguments="local:MainWindowViewModel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cad="clr-namespace:Weingartner.EyeShot.Assembly3D;assembly=Assembly3D"
+        xmlns:reactiveui="http://reactiveui.net"
+        xmlns:local="clr-namespace:EyeshotTestApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding AddModelCommand}" Content="Add" x:Name="AddButton"/>
+        </StackPanel>
+        <local:PooledViewportLayout Grid.Row="1" 
+                        x:Name="ViewPort">
+            <local:PooledViewportLayout.Resources>
+                <Style TargetType="cad:WgViewportLayout">
+                    <Setter Property="Assembly3D" Value="{Binding ViewAssembly3D}"/>
+                    <Setter Property="ResetZoomObservable" Value="{Binding ResetZoomObservable}"/>
+                    <Setter Property="ViewType" Value="Front"/>
+                    <Setter Property="ShowEdgesObservable" Value="False"/>
+                </Style>
+            </local:PooledViewportLayout.Resources>
+        </local:PooledViewportLayout>
+    </Grid>
+</reactiveui:ReactiveWindow>

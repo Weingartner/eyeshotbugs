@@ -16,7 +16,6 @@ using DynamicData.Binding;
 using LanguageExt;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.EyeShot.Assembly3D.Weingartner.Utils;
 using Debugger = System.Diagnostics.Debugger;
 using Label = devDept.Eyeshot.Labels.Label;
@@ -272,7 +271,20 @@ namespace Weingartner.EyeShot.Assembly3D
             return this;
         }
 
-        private void Add(Entity e)
+        public void Add(Entity e)
+        {
+            AssertCorrectThread();
+            if (Block.Entities.Contains(e))
+                throw new ArgumentException("Entity has already been added once");
+            Block.Entities.Add(e);
+            if (e is IRequiresRedraw irr)
+            {
+                _RedrawSubscriptions.Register(e, () => irr.RedrawRequiredObservable.Subscribe(_ => FireChange()));
+            }
+            FireChange();
+        }        
+        
+        public void Add(Entity e, Color? color = null)
         {
             AssertCorrectThread();
             if (Block.Entities.Contains(e))
@@ -674,6 +686,67 @@ namespace Weingartner.EyeShot.Assembly3D
         }
 
 
+        /// <summary>
+        /// Provides the viewport with change handling on a property that contains and Assembly3D.
+        /// When the property changes it is compiled and it's components are added correctly to the
+        /// 3D viewport.
+        /// </summary>
+        /// <param name="assemblyViewportLayoutAdapter"></param>
+        /// <param name="selector">for example <![CDATA[p=>p.Assembly]]> where Assembly is of type Assembly3D</param>
+        /// <param name="postAddAction"></param>
+        /// <returns></returns>
+        public static IDisposable BindAssemblyToViewport
+            (WgViewportLayout assemblyViewportLayoutAdapter
+            , Expression<Func<WgViewportLayout, Assembly3D>> selector
+            , Action postAddAction)
+        {
+            return assemblyViewportLayoutAdapter
+                  .Ready()
+                  .Select(_ => assemblyViewportLayoutAdapter
+                              .WhenAnyValue(selector)
+                              .Where(v => v!=null)
+                              .DistinctUntilChanged(p => p?.Block.Name))
+                  .Switch()
+                  .SubscribeDisposable
+                       (asm => asm.BindToViewportLayout
+                                (assemblyViewportLayoutAdapter
+                                , postAddAction));
+        }
+
+        /// <summary>
+        /// Add the assembly to the viewport. This also hooks up listeners to
+        /// any transformations on the assembly and invalidates the viewport
+        /// to ensure a redraw.
+        /// </summary>
+        /// <param name="viewportLayout"></param>
+        /// <param name="postAddAction"></param>
+        public IDisposable BindToViewportLayout(WgViewportLayout viewportLayout, Action postAddAction = null)
+        {
+            return viewportLayout.Dispatcher.Invoke
+                (() =>
+                {
+                    Decompile();
+                    Compile
+                        (invoker: (action, regen) =>
+                             viewportLayout.Dispatcher.InvokeAsync
+                                 (() =>
+                                 {
+                                     action();
+                                     if (IsCompiled && regen)
+                                         Regen();
+                                 })
+                        , assemblyViewport: viewportLayout
+                        , addToViewportLayout: true
+                        );
+
+                    postAddAction?.Invoke();
+                    viewportLayout.Invalidate();
+
+                    return Disposable.Create(Decompile);
+                });
+
+        }        
+        
         /// <summary>
         /// Provides the viewport with change handling on a property that contains and Assembly3D.
         /// When the property changes it is compiled and it's components are added correctly to the

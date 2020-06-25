@@ -5,8 +5,6 @@ using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Weingartner.EyeShot;
-using Weingartner.Eyeshot.Assembly3D;
 using Weingartner.EyeShot.Assembly3D;
 
 namespace RingsDemo

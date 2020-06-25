@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly3D", "Assembly3D\As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeshotBugs", "EyeshotBugs\EyeshotBugs.csproj", "{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EyeshotTestApp", "EyeshotTestApp\EyeshotTestApp.csproj", "{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,7 @@ using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
+using Weingartner.EyeShot.Assembly3D;
 
 namespace EyeshotBugs.Utils
 {

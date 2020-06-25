@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace EyeshotBugs
+namespace Weingartner.EyeShot.Assembly3D
 {
 
     public partial class PromptDialog : Window

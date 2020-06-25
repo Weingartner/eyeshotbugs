@@ -1,5 +1,5 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    x:Class="EyeshotBugs.PromptDialog"
+    x:Class="Weingartner.EyeShot.Assembly3D.PromptDialog"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     WindowStartupLocation="CenterScreen" 
     SizeToContent="WidthAndHeight"

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace Weingartner.Eyeshot.Assembly3D
+namespace Weingartner.EyeShot.Assembly3D
 {
     public static class ObservableExtensions
     {

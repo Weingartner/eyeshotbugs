@@ -7,7 +7,7 @@ using devDept.Eyeshot.Entities;
 using devDept.Geometry;
 using devDept.Graphics;
 using EyeshotBugs.Utils;
-using Weingartner.EyeShot;
+using Weingartner.EyeShot.Assembly3D;
 using Xunit;
 
 namespace EyeshotBugs

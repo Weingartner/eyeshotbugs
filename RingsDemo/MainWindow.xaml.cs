@@ -7,7 +7,7 @@ using System.Windows;
 using devDept.Eyeshot;
 using devDept.Eyeshot.Entities;
 using ReactiveUI;
-using Weingartner.Eyeshot.Assembly3D;
+using Weingartner.EyeShot.Assembly3D;
 
 namespace RingsDemo
 {

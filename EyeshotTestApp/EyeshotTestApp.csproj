@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\ReactiveUI.Fody.11.4.17\build\ReactiveUI.Fody.props" Condition="Exists('..\packages\ReactiveUI.Fody.11.4.17\build\ReactiveUI.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8F3DA446-ECB7-4DB4-BDF1-B6D419BD2283}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EyeshotBugs</RootNamespace>
-    <AssemblyName>EyeshotBugs</AssemblyName>
+    <ProjectGuid>{D1BBA403-5BEB-4472-A81A-A1B8335DE96A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>EyeshotTestApp</RootNamespace>
+    <AssemblyName>EyeshotTestApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -52,17 +53,15 @@
     <Reference Include="DynamicData, Version=6.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicData.6.15.1\lib\net461\DynamicData.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.5.10.3\lib\net47\FluentAssertions.dll</HintPath>
-    </Reference>
     <Reference Include="LanguageExt.Core, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LanguageExt.Core.3.4.15\lib\net461\LanguageExt.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Reactive.Testing, Version=4.4.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Reactive.Testing.4.4.1\lib\net46\Microsoft.Reactive.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Pharmacist.Common, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Pharmacist.Common.1.5.15\lib\netstandard2.0\Pharmacist.Common.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="ReactiveUI, Version=11.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveUI.11.4.17\lib\net461\ReactiveUI.dll</HintPath>
@@ -70,8 +69,11 @@
     <Reference Include="ReactiveUI.Events.WPF, Version=11.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveUI.Events.WPF.11.4.17\lib\net461\ReactiveUI.Events.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Fody.Helpers, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Weingartner.ReactiveUI.Fody.2.3.0-alpha.10\lib\net45\ReactiveUI.Fody.Helpers.dll</HintPath>
+    <Reference Include="ReactiveUI.Fody.Helpers, Version=11.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveUI.Fody.11.4.17\lib\net461\ReactiveUI.Fody.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Testing, Version=11.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveUI.Testing.11.4.17\lib\net461\ReactiveUI.Testing.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI.WPF, Version=11.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveUI.WPF.11.4.17\lib\net461\ReactiveUI.WPF.dll</HintPath>
@@ -79,33 +81,27 @@
     <Reference Include="Splat, Version=9.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Splat.9.4.5\lib\net461\Splat.dll</HintPath>
     </Reference>
-    <Reference Include="Splat.Drawing, Version=9.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Splat.Drawing.9.4.5\lib\net461\Splat.Drawing.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Interactive, Version=4.1.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Interactive.4.1.1\lib\net45\System.Interactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive, Version=4.4.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.4.4.1\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Core.4.4.1\lib\net46\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Linq.4.4.1\lib\net46\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -118,60 +114,71 @@
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
-    </Reference>
-    <Reference Include="Xunit.StaFact, Version=0.3.0.0, Culture=neutral, PublicKeyToken=593f35978b459a4b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xunit.StaFact.0.3.18\lib\net452\Xunit.StaFact.dll</HintPath>
-    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bug12720.cs" />
-    <Compile Include="Bug12783.cs" />
-    <Compile Include="Bug12788.cs" />
-    <Compile Include="Bug13207.cs" />
-    <Compile Include="DropLoopsBugs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solid3DBugs.cs" />
-    <Compile Include="Utils\Utils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FodyWeavers.xml">
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="PooledViewportLayout.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Assembly3D\Assembly3D.csproj">
-      <Project>{E59AE2FE-76D4-4E1E-BE9D-1E79BB6275E9}</Project>
+      <Project>{e59ae2fe-76d4-4e1e-be9d-1e79bb6275e9}</Project>
       <Name>Assembly3D</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.2.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.2.0\build\Fody.targets')" />
@@ -181,15 +188,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.6.2.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.2.0\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\ReactiveUI.Fody.11.4.17\build\ReactiveUI.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ReactiveUI.Fody.11.4.17\build\ReactiveUI.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
-    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
   </Target>
-  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

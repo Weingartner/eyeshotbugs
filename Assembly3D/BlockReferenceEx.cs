@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Weingartner.Eyeshot.Assembly3D
+namespace Weingartner.EyeShot.Assembly3D
 {
     using System;
     using System.Collections.Generic;

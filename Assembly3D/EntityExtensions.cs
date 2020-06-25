@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Reactive.Disposables;
 using devDept.Eyeshot.Entities;
 using devDept.Geometry;
-using Weingartner.Eyeshot.Assembly3D;
+using Weingartner.EyeShot.Assembly3D;
 
-namespace Weingartner.EyeShot
+namespace Weingartner.EyeShot.Assembly3D
 {
     public static class EntityExtensions
     {

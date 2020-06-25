@@ -4,7 +4,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
 
-namespace Weingartner.Eyeshot.Assembly3D
+namespace Weingartner.EyeShot.Assembly3D
 {
     public static class FrameworkElementExtensions
     {
