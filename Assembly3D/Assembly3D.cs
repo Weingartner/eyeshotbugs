@@ -273,23 +273,15 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public void Add(Entity e)
         {
-            AssertCorrectThread();
-            if (Block.Entities.Contains(e))
-                throw new ArgumentException("Entity has already been added once");
-            Block.Entities.Add(e);
-            if (e is IRequiresRedraw irr)
-            {
-                _RedrawSubscriptions.Register(e, () => irr.RedrawRequiredObservable.Subscribe(_ => FireChange()));
-            }
-            FireChange();
+            Add( e, Color.Gray );
         }        
         
-        public void Add(Entity e, Color? color = null)
+        public void Add(Entity e, Color color)
         {
             AssertCorrectThread();
             if (Block.Entities.Contains(e))
                 throw new ArgumentException("Entity has already been added once");
-            Block.Entities.Add(e);
+            Block.Entities.Add(e, color);
             if (e is IRequiresRedraw irr)
             {
                 _RedrawSubscriptions.Register(e, () => irr.RedrawRequiredObservable.Subscribe(_ => FireChange()));
