@@ -120,13 +120,13 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public void Validate()
         {
-            if (AssemblyViewport != null && IsCompiled)
+            if (AssemblyModel != null && IsCompiled)
             {
-                Debug.Assert(AssemblyViewport.Blocks.Contains(Block), "Viewport does not contain block reference");
-                Debug.Assert(AssemblyViewport.Blocks.Contains(Block.Name), "Viewport does not contain block reference");
+                Debug.Assert(AssemblyModel.Blocks.Contains(Block), "Viewport does not contain block reference");
+                Debug.Assert(AssemblyModel.Blocks.Contains(Block.Name), "Viewport does not contain block reference");
                 foreach (var ent in Block.Entities.OfType<BlockReference>())
                 {
-                    Debug.Assert(AssemblyViewport.Blocks.Contains(ent.BlockName), "Viewport does not contain block reference");
+                    Debug.Assert(AssemblyModel.Blocks.Contains(ent.BlockName), "Viewport does not contain block reference");
                 }
                 foreach (var sub in SubAssemblies)
                 {
@@ -144,9 +144,9 @@ namespace Weingartner.EyeShot.Assembly3D
 
         public void AssertCorrectThread()
         {
-            if (AssemblyViewport == null)
+            if (AssemblyModel == null)
                 return;
-            if (AssemblyViewport.Dispatcher.Thread == Thread.CurrentThread)
+            if (AssemblyModel.Dispatcher.Thread == Thread.CurrentThread)
                 return;
             if (Debugger.IsAttached)
                 Debugger.Break();
@@ -466,7 +466,7 @@ namespace Weingartner.EyeShot.Assembly3D
                 {
                     BlockReference.Transformation = v;
                     BlockReference.RegenMode = regenType.NotNeeded;
-                    Invalidate(AssemblyViewport);
+                    Invalidate(AssemblyModel);
                 });
 
             ChangedObservable
@@ -476,7 +476,7 @@ namespace Weingartner.EyeShot.Assembly3D
                    if (IsCompiled)
                    {
                        Regen();
-                       Invalidate(AssemblyViewport);
+                       Invalidate(AssemblyModel);
                    }
                });
         }
@@ -500,7 +500,7 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             if (IsCompiled)
             {
-                if (assemblyViewport != null && !Equals(assemblyViewport, AssemblyViewport))
+                if (assemblyViewport != null && !Equals(assemblyViewport, AssemblyModel))
                     throw new Exception("Trying to assign assembly to multiple viewports is not allowed");
                 Validate();
                 return;
@@ -508,7 +508,7 @@ namespace Weingartner.EyeShot.Assembly3D
 
             IEnumerable<IDisposable> Compile()
             {
-                yield return AssemblyViewport.AddBlock(BlockReference.BlockName,Block);
+                yield return AssemblyModel.AddBlock(BlockReference.BlockName,Block);
 
                 yield return Disposable.Create(DecompileAllSubAssemblies);
                 CompileAllSubAssemblies();
@@ -518,16 +518,16 @@ namespace Weingartner.EyeShot.Assembly3D
 
                 if (addToViewportLayout)
                 {
-                    AssemblyViewport.Entities.Add(BlockReference);
-                    yield return Disposable.Create(() => AssemblyViewport.Entities.Remove(BlockReference));
+                    AssemblyModel.Entities.Add(BlockReference);
+                    yield return Disposable.Create(() => AssemblyModel.Entities.Remove(BlockReference));
                 }
 
-                yield return OnCompiled(AssemblyViewport);
+                yield return OnCompiled(AssemblyModel);
             }
 
             using (DelayChangeNotifications())
             {
-                AssemblyViewport = assemblyViewport;
+                AssemblyModel = assemblyViewport;
                 _Invoker = invoker;
                 AssertCorrectThread();
                 _Subscriptions = new CompositeDisposable(Compile());
@@ -556,7 +556,7 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             assembly3D.Compile
                 (_Invoker
-               , assemblyViewport: AssemblyViewport
+               , assemblyViewport: AssemblyModel
                 );
         }
 
@@ -601,7 +601,7 @@ namespace Weingartner.EyeShot.Assembly3D
         #endregion
 
         private IDisposable _Subscriptions = Disposable.Empty;
-        public Model AssemblyViewport { get; private set; }
+        public Model AssemblyModel { get; private set; }
         private readonly string _Name;
 
         [Reactive] public bool IsCompiled { get; private set; }
@@ -611,9 +611,9 @@ namespace Weingartner.EyeShot.Assembly3D
 
         private void LabelAdded(Label label)
         {
-            if (AssemblyViewport == null)
+            if (AssemblyModel == null)
                 return;
-            AssemblyViewport.Labels.Add(label);
+            AssemblyModel.Labels.Add(label);
             FireChange();
         }
 
@@ -622,7 +622,7 @@ namespace Weingartner.EyeShot.Assembly3D
             if (!IsCompiled)
                 return;
 
-            AssemblyViewport.Labels.Remove(label);
+            AssemblyModel.Labels.Remove(label);
             if (fire)
                 FireChange();
         }
@@ -656,7 +656,7 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             if (!IsCompiled)
                 throw new Exception("Assembly must be compiled and attached to viewport to call this");
-            AssemblyViewport.SetSelectionScope(BlockReferenceStack);
+            AssemblyModel.SetSelectionScope(BlockReferenceStack);
         }
 
 
@@ -666,14 +666,14 @@ namespace Weingartner.EyeShot.Assembly3D
             // This check is here because sometimes deep in eyeshot
             // there is a null reference exception and it occurs 
             // when the renderContext is null
-            if (AssemblyViewport.renderContext != null)
+            if (AssemblyModel.renderContext != null)
             {
-                var p = new RegenParams(CurrentOrParentRegenTolerance, AssemblyViewport);
+                var p = new RegenParams(CurrentOrParentRegenTolerance, AssemblyModel);
                 BlockReference.Regen(p);
                 Block.Entities.RegenAllCurved();
-                AssemblyViewport.Entities.Regen();
-                AssemblyViewport.Invalidate();
-                AssemblyViewport.AdjustNearAndFarPlanes();
+                AssemblyModel.Entities.Regen();
+                AssemblyModel.Invalidate();
+                AssemblyModel.AdjustNearAndFarPlanes();
             }
         }
 

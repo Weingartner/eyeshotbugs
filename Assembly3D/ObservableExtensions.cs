@@ -27,5 +27,10 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             return observable.SubscribeDisposable(t => (IDisposable) new CompositeDisposable(action(t)));
         }
+
+        public static IObservable<T> WhereNotNull<T>( this IObservable<T> thisObservable )
+        {
+            return thisObservable.Where( e => e != null );
+        }
     }
 }

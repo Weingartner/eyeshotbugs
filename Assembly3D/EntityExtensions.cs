@@ -83,7 +83,6 @@ namespace Weingartner.EyeShot.Assembly3D
         {
             return new BlockReference(new Identity(), block.Name);
         }
-
     }
 
 }

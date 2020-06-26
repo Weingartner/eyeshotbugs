@@ -11,23 +11,40 @@
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding AddModelCommand}" Content="Add" x:Name="AddButton"/>
+
+        <StackPanel Grid.Column="0" Grid.Row="0"
+                    Orientation="Horizontal">
+            <Button Command="{Binding AddModelCommand}" Content="Add" x:Name="AddButton" />
         </StackPanel>
-        <local:PooledViewportLayout Grid.Row="1" 
-                        x:Name="ViewPort">
+        <local:PooledViewportLayout Grid.Column="0" Grid.Row="1"
+                                    x:Name="ViewPort">
             <local:PooledViewportLayout.Resources>
                 <Style TargetType="cad:WgViewportLayout">
-                    <Setter Property="Assembly3D" Value="{Binding ViewAssembly3D}"/>
-                    <Setter Property="ResetZoomObservable" Value="{Binding ResetZoomObservable}"/>
-                    <Setter Property="ViewType" Value="Front"/>
-                    <Setter Property="ShowEdgesObservable" Value="False"/>
+                    <Setter Property="Assembly3D" Value="{Binding ViewAssembly3D}" />
+                    <Setter Property="ResetZoomObservable" Value="{Binding ResetZoomObservable}" />
+                    <Setter Property="ViewType" Value="Front" />
+                    <Setter Property="ShowEdgesObservable" Value="False" />
                 </Style>
             </local:PooledViewportLayout.Resources>
         </local:PooledViewportLayout>
+        <GridSplitter Grid.Column="1" Grid.Row="0"
+                      Grid.RowSpan="2"/>
+        <DataGrid Grid.Column="2" Grid.Row="0"
+                  Grid.RowSpan="2"
+                  ItemsSource="{Binding BlockList}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </reactiveui:ReactiveWindow>

@@ -30,16 +30,17 @@ namespace EyeshotTestApp
             InitializeComponent();
             ViewModel = new MainWindowViewModel();
 
-            this.LoadUnloadHandler(Init);
+            this.WhenActivated( Init );
 
         }
 
-        private IEnumerable<IDisposable> Init()
+        private void Init( CompositeDisposable obj )
         {
             //Bind the ReactiveWindow ViewModel Property to the DataContext
-            yield return this.WhenAnyValue( p => p.ViewModel )
-                             .BindTo( this, view => view.DataContext );
+            this.WhenAnyValue( p => p.ViewModel )
+                .BindTo( this, view => view.DataContext );
         }
+
 
     }
 }
