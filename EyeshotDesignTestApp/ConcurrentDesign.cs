@@ -19,23 +19,27 @@ namespace EyeshotDesignTestApp
     public class ConcurrentDesign : ContentControl
     {
         private static readonly ConcurrentBag<Design> Designs = new ConcurrentBag<Design>();
+        private static readonly DesignDocument DesignDoc = new DesignDocument();
 
         public static readonly DependencyProperty ViewportContentProperty =
             DependencyProperty.Register
                 ( nameof(ViewportContent)
-                  , typeof(Entity[])
+                  , typeof(IWeingartnerEyeshotDoc)
                   , typeof(ConcurrentDesign)
-                  , new PropertyMetadata( Array.Empty<Entity>() ) );
+                  , new PropertyMetadata(default(IWeingartnerEyeshotDoc)) );
 
-        public Entity[] ViewportContent
+        public IWeingartnerEyeshotDoc ViewportContent
         {
-            get => (Entity[])GetValue( ViewportContentProperty );
+            get => (IWeingartnerEyeshotDoc)GetValue( ViewportContentProperty );
             set => SetValue( ViewportContentProperty, value );
         }
 
         private static readonly Transformation Identity = new Identity();
         public ConcurrentDesign()
         {
+            var d = Builder.BuildDesign();
+            d.LoadDocument(DesignDoc);
+            Designs.Add(d);
             this.LoadUnloadHandlerFromReactiveUi
                 ( () =>
                  {
@@ -43,25 +47,9 @@ namespace EyeshotDesignTestApp
                      design.CreateControl();
                      Content = design;
 
-                     var disp = Disposable.Empty;
-                     
-
                      var d1 = this.WhenAnyValue( x => x.ViewportContent )
                                 .WhereNotNull()
-                                .Do( _ => disp.Dispose() )
-                                // ctor
-                                .Select( e =>
-                                {
-                                    var block = new Block ( Guid.NewGuid() .ToString() );
-                                    var blockRef = new BlockReference( Identity, block.Name );
-                                    block.Entities.AddRange( e );
-                                    
-                                    var designDoc = new DesignDocument();
-                                    disp = AddStuff( designDoc, block, blockRef );
-                                    return designDoc;
-                                } )
-                                .Do( doc => design.LoadDocument( doc ) )
-                                .Subscribe();
+                                .SubscribeDisposable(wgDoc => wgDoc.AddTo(DesignDoc));
 
                      var d2 = Disposable.Create( (ctl: this, design), t =>
                      {
@@ -73,16 +61,6 @@ namespace EyeshotDesignTestApp
                  }
                 );
 
-        }
-
-        private static IDisposable AddStuff(DesignDocument designDoc, Block block, BlockReference blockRef)
-        {
-            var cd = new CompositeDisposable();
-            designDoc.Blocks.Add( block );
-            cd.Add( Disposable.Create((designDoc, block), t => t.designDoc.Blocks.Remove( t.block.Name )) );
-            designDoc.RootBlock.Entities.Add( blockRef );
-            cd.Add(Disposable.Create((designDoc.RootBlock,blockRef), t => t.RootBlock.Entities.Remove( t.blockRef )));
-            return cd;
         }
     }
 
@@ -121,6 +99,17 @@ namespace EyeshotDesignTestApp
     }
     public static class Extensions
     {
+        public static IDisposable SubscribeDisposable<T>(this IObservable<T> observable, Func<T, IDisposable> action)
+        {
+            var d = new SerialDisposable();
+            return observable
+                   .Finally(() => d.Dispose())
+                   .Subscribe(e =>
+                   {
+                       d.Disposable = Disposable.Empty;
+                       d.Disposable = action(e);
+                   });
+        }
         public static IDisposable LoadUnloadHandlerFromReactiveUi(this FrameworkElement control, Func<IDisposable> block)
         {
             var cleanup = new SerialDisposable();

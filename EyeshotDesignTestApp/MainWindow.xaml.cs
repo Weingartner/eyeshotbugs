@@ -59,7 +59,7 @@ namespace EyeshotDesignTestApp
         /// - Click on ZoomFit button
         /// --> no exception
         /// </summary>
-        public static UserControl Uc3 = new UserControl2();
+        public static UserControl Uc3 = Uc2;
         public static UserControl2ViewModel Uc3Vm = new UserControl2ViewModel ( Mesh.CreateSphere( 0.8,512, 512 ));
     }
 }
